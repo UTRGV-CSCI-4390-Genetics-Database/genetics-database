@@ -11,7 +11,7 @@
   margin-bottom:1px;
   height:1px;
   width:100%;
-   border-top:1px solid rgb(203, 216, 211);
+   border-top:1px solid rgb(83, 143, 5);
  }
 
  .h-divider2{
@@ -35,7 +35,7 @@
   margin-bottom:16px;
   height:1px;
   width:100%;
-   border-top:1px solid rgb(203, 216, 211);
+   border-top:1px solid rgb(12, 4, 58);
  }
 
  .results {
@@ -60,4 +60,20 @@ td, th {
 
 tr:nth-child(even) {
   background-color: #dddddd;
+}
+
+.mar{
+  padding-left:26px;
+  margin-top:3px;
+ }
+ .mar2{
+  padding-left:50px;
+ }
+
+ .charW{
+  width:300px;
+ }
+
+ .font {
+  font-size: 14px;
 }

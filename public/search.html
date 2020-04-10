@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css"> 
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <title>Search</title>
+</head>
+<body>
+<div class="container-fluid"><nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="/home">Home</a>
+      <a class="nav-item nav-link active" href="/search">Search</a>
+      <a class="nav-item nav-link" href="/post">New Record</a>
+      <a class="nav-item nav-link" href="/update">Update</a>
+      <a class="nav-item nav-link" href="/delete">Delete</a>
+      <a class="nav-item nav-link" href="/about">About</a>
+    </div>
+  </div>
+
+</nav>
+<div class="h-divider1"></div>  <div class="h-divider4"></div>
+ <h3>Select: </h3>
+ <div class="input-group mb-3 col-7">
+  <div class="input-group-prepend">
+    <button id = "bt1" class="btn btn-outline-secondary" type="button">Select...</button>
+  </div>
+  <input id = "select" type="text" class="form-control" placeholder="Select column names..." aria-describedby="basic-addon1">
+</div>
+  <div id="accordion" class="col-5" >
+    <div class="card temp ">
+      <div class="card-header" id="headingOne">
+        <h6 class="mb-0">
+         <button class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#One" aria-expanded="false" aria-controls="collapseOne">
+            name </button></h6>
+      </div>
+      <div id="One" class="collapse" aria-labelledby="headingOne" data-parent="#accordion"> <div class="card-body"> </div></div>
+    </div>
+  </div>
+  <div class="h-divider1"></div>  <div class="h-divider4"></div>
+  <h3>From: </h3>
+  <div class="form-group row">  <div class="col-3"> 
+    <select class="form-control" id = "from" > <option id = "from1">Select table...</option></select></div></div>
+  <div class="h-divider1"></div>  <div class="h-divider4"></div>
+  <h3>Where: </h3>
+  <div class="btn-toolbar" role="toolbar">
+    <div id = "where" class="input-group col-7">
+      <div class="input-group-prepend">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select</button>
+        <div class="dropdown-menu">
+          <a id = "where1" class="dropdown-item" href="#"></a>
+        </div>
+      </div>
+      <input id = "whereIn" type="text" class="form-control" placeholder= "Select conditions...">
+    </div>
+    <div class="btn-group" role="group">
+      <button id = "par1" type="button" class="btn btn-outline-secondary">(</button>
+      <button id = "par2" type="button" class="btn btn-outline-secondary">)</button>
+      <button id = "and" type="button" class="btn btn-outline-secondary">AND</button>
+      <button id = "or" type="button" class="btn btn-outline-secondary">OR</button>
+    </div></div>
+
+    <div id = "sexDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "sexLab" class="input-group-text">Opt</label></div>
+      <select  id = "sexIn" class="custom-select col-1"><option>F</option><option>M</option></select></div>
+    <div id = "ethnicDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "ethnicLab" class="input-group-text">Opt</label></div>
+      <select  id = "ethnicIn" class="custom-select col-2"><option>1- Hispanic or Latino</option><option>2 - Not Hispanic or Latino</option><option>210 - Europen</option><option>211 - Anglo-Saxon</option> <option>273 - Mexican Hispanic</option><option>290 - Other</option></select></div>
+    <div id = "incomeDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "incomeLab" class="input-group-text">Opt</label></div>
+      <select  id = "incomeIn" class="custom-select col-2"><option>1 - $0-$15,000</option><option>2 - $15,001-$25,000</option><option>3 - $25,001-$40,000</option><option>4 - $40,001-$55,000</option><option>5 - $55,001-$75,000</option><option>6 - $75,001-$100,000</option> <option>7 - $100,001-$150,000</option><option>8. Greater than $150,001</option></select></div>
+    <div  id = "boolDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "boolLab" class="input-group-text">Opt</label></div>
+      <select  id = "boolIn" class="custom-select col-1"><option>true</option><option>false</option></select></div>
+    <div id = "marDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "marLab" class="input-group-text">Opt</label></div>
+      <select  id = "marIn" class="custom-select col-1"><option>Married</option><option>Never Married</option><option>Divorced</option><option>Separated</option><option>Widowed</option></select></div>
+    <div id = "textDiv" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id="textLab">First and last name</span></div>
+      <select id = "textIn1" class="custom-select col-1 "><option> = </option><option>LIKE</option><option>ILIKE</option></select>
+      <input id = "textIn2" type="text" class="col-2"> 
+      <span class="mar">LIKE can be used with (%) for matching any sequence of characters and with (_)  for matching any single character. <a href="https://www.postgresqltutorial.com/postgresql-like/" target="_blank">More info here...</a></span></div> 
+    <div id = "intDiv" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id="intLab">First and last name</span></div>
+      <select id = "intIn1" class="custom-select col-1 "><option> = </option><option>></option><option><</option><option>between</option></select>
+      <input id = "intIn2" type="number"  min = '0' class="col-2"></div>
+    <div id = "realDiv" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id="realLab">First and last name</span></div>
+      <select id = "realIn1" class="custom-select col-1 "><option> = </option><option>></option><option><</option><option>between</option></select>
+      <input id = "realIn2" type="number" step = '0.01' min = '0' class="col-2"></div>
+    <div id = "dateDiv" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id="dateLab">First and last name</span></div>
+      <select id = "dateIn1" class="custom-select col-1 "><option> = </option><option>></option><option><</option><option>between</option></select>
+      <input id = "dateIn2" type="date" class="col-2"></div>
+    <div id = "dateDivB" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id = "dateLabB">$</span></div>
+      <input id = "dateIn1B" type="date" class="form-control col-2"><span class="input-group-text">AND</span>
+      <input id = "dateIn2B" type="date" class="form-control col-2"></div>
+    <div id = "intDivB" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id = "intLabB">$</span></div>
+      <input id = "intIn1B" type="number"  min = '0'class="form-control col-2"><span class="input-group-text">AND</span>
+      <input id = "intIn2B" type="number"  min = '0' class="form-control col-2"></div>
+    <div id = "realDivB" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id = "realLabB">$</span></div>
+      <input id = "realIn1B" type="number" step = '0.01' min = '0' class="form-control col-2"><span class="input-group-text">AND</span>
+      <input id = "realIn2B" type="number" step = '0.01' min = '0' class="form-control col-2"></div> 
+  <div class="h-divider1"></div>  <div class="h-divider4"></div>
+  <h4>SELECT:  <span id = "select2" class = "font"></span></h4>
+  <div id = "fromContainer"><div class = "fromWhere"><h5 id = "and0" class="mar2"></h5><h4 >FROM:  <span id = "from20" class = "font"></span> <span"> WHERE: </span>
+    <span id = "where20" class = "font"></span></h4></div></div>
+  
+  <div class="btn-group" role="group">
+    <div class="input-group-prepend"><label id = "sexLab" class="input-group-text">More table...</label></div>
+    <button id = "par11" type="button" class="btn btn-outline-secondary">(</button>
+    <button id = "par21" type="button" class="btn btn-outline-secondary">)</button>
+    <button id = "and1" type="button" class="btn btn-outline-secondary">AND</button>
+    <button id = "or1" type="button" class="btn btn-outline-secondary">OR</button>
+  </div>
+  <div class="h-divider1"></div>  <div class="h-divider4"></div>
+  <div class="container"><div class="row"><div class="col-sm"></div><div class="col-sm"></div><div class="col-sm"></div>
+    <div class="col-sm"><div> <button id = "run" type="button" class="btn btn-dark btn-lg" >Run your query</button></div></div></div>
+  </div>
+</div>
+  <div id = "check" class="form-check temp"><input type="checkbox" class="form-check-input" ><label class="form-check-label" >Check me out</label></div>
+  <div id = "checkDis" class="form-check temp" ><input type="checkbox" class="form-check-input" disabled><label class="form-check-label" >Check me out</label></div>
+  <button type ="button" id = "bt">to znowu ja</button>
+  <button type="button" class="btn btn-outline-info btn-lg" id = 'b'>Submit</button>
+  <div class = "temp"><form id = 'form' action="/table" method="POST" ><input id = 'in' type="text" name="obj" value="" target="_blank"></form> </div>
+    <!-- Optional JavaScript -->
+    <script src="data.js"></script>
+    <script src="search.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

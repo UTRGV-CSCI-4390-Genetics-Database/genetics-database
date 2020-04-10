@@ -44,8 +44,7 @@ async function read(text){
         return [];
     }
 }
-str = "SELECT sex FROM individuals WHERE sex = 'M'" ;
-str = "SELECT sex FROM individuals WHERE sex = 'M'" ;
+
 app.get('/home', function(req, res){
     res.sendFile(`${__dirname }/public/index.html`);})
 app.get('/about', function(req, res){
@@ -61,13 +60,13 @@ app.get('/delete', function(req, res){
 app.post('/results', async function(req, res){
     var table = await read(req.body.obj.request);
     res.send(table);});
-app.post('/schema',  function(req, res){
+app.post('/schema', async function(req, res){
     var obj = req.body.obj;
     //obj = JSON.stringify(obj.medical_history);
     //console.log(obj.length);
     //newobj = JSON.parse(obj);
      //
-   // await saveFile(obj);bj
+   // 
    newObj = {};
    for (let [key, value] of Object.entries(obj)){
        console.log(obj[key].length)
@@ -81,6 +80,7 @@ app.post('/schema',  function(req, res){
        console.log(key);
      }
     console.log(newObj);
+    await saveFile(newObj);
     res.send("Schema sucesfully updated")
 });
 connect()

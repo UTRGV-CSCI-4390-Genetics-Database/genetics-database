@@ -2,13 +2,15 @@ columnArray = [];
 nameOfColumns = "";
 $(document).ready(function(){
     count = 0;
-    current = 0;
     from = $("#from").val();
     myCheck = $("#check").clone(); 
     myCheckDis = $("#checkDis").clone(); 
     myAccord = $(".card").clone();
     myFrom = $("#from1").clone();
     myWhere = $("#where1").clone();
+    //myFromWhere = $(".fromWhere").clone(true);
+
+    //listElem = $(".listElem").clone(true);
     $(".temp").hide(); 
     columnListInAccordion(data);
     $("#accordion").hide();
@@ -17,17 +19,8 @@ $(document).ready(function(){
       else {nameOfColumns=doOdd();}
       even = !even;
     });
-    $("#from").blur(function(){
-      from = $("#from").val(); 
-      if(from == "Select table..."){
-        alert("You have to choose the table");
-      }
-      else{
-        $('#from').prop("disabled", true);
-        $("#from2"+count).text(from);
-      }
-    });
-    $('#where').on('show.bs.dropdown', function(){
+    $("#from").click(function(){from = $("#from").val(); $("#from2"+count).text(from);});
+    $('#where').on('show.bs.dropdown', function () {
       if(from == "Select table..."){
         alert("You have to choose the table");
       }
@@ -67,46 +60,35 @@ $(document).ready(function(){
     $("#and").click(function(){whereIn(" AND ");});
     $("#or").click(function(){whereIn(" OR ");});
     $("#del").click(function(){whereInDel();});
-    $("#moreTable").click(function(){
-      $('#from').prop("disabled", false); 
-      var szlag = $('#szlag'+count).clone(true);
-      szlag.find("#from2"+count).text('');
-      szlag.find("#where2"+count).text('');
-      count++; 
-      current = count;
-      szlag.find("#from2"+(count-1)).attr('id',"from2"+count);
-      szlag.find("#where2"+(count-1)).attr('id',"where2"+count);
-      szlag.attr('id',"szlag"+count);
-      $("#fromContainer").append(szlag.clone(true));
-      $("#whereIn").val('');
+    $("#and1").click(function(){appendFromWhere(" AND"); count+= 1; $('#from').prop("disabled", false); $("#whereIn").val("");});
+    $("#or1").click(function(){appendFromWhere(" OR"); count+= 1; $('#from').prop("disabled", false); $("#whereIn").val("");});
+    $("#bt").click(function(){
+   });
+   $("#b").click(function(){
+
+  });
+  const zwrot = function(){
+    console.log( $(this).attr('id'))
+  }
+  $(".fon").on("click", function(){
+      console.log("cos tam")
+      $(this).hide();
     });
-    $('a.font').click(function() { 
-      var val = $(this).attr('id');
-      current = val.substring(6, val.length);
-      str =  $("#where2"+current).text();
-      $("#whereIn").val('');
-      whereIn(str);
-    });
-    $('#run').on('click', function(){
-      var qArr=[];
-      qArr = getQueryArr(count);
-      singleRequstArr = getSingleRequestArr(qArr);
-      $("#list").show();
-      $("#list").empty();
-      ajaxSingleReq(singleRequstArr);
-      var fromAll = queryFromAll(qArr);
-      strSelect=$('#select').val();
-      queryStr='SELECT '+strSelect+strJoin+' WHERE '+fromAll+';';
-      createTable(queryStr);
-      $("#excel").show();
-      console.log(queryStr);
-    });  
-    $("#excel").click(function(){
-      $("#showData").table2excel({
-        exclude:".noExl",
-        name:"Worksheet Name",
-        filename:"NewTable",
-        fileext:".xls" 
-      });
-    })
+  $('#run').on('click', function(){
+    qArr = getQueryArr(count);
+    singleRequstArr = getSingleRequestArr(qArr);
+    $("#list").show();
+    ajaxSingleReq(singleRequstArr);
+  });  
+  $("#bt").click(function(){
+    console.log("klik on button")
+    createTable(strRequest);
+  });
+
+  $('.font').click(function() { 
+    //var id = $(this).attr('id');
+    console.log("jestem")
+});
+
+
 });

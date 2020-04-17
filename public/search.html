@@ -1,21 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <style>
-      th, td, p, input {
-          font:14px Verdana;
-      }
-      table, th, td 
-      {
-          border: solid 1px #DDD;
-          border-collapse: collapse;
-          padding: 2px 3px;
-          text-align: center;
-      }
-      th {
-          font-weight:bold;
-      }
-  </style>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -84,14 +69,106 @@
 
     <div id = "sexDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "sexLab" class="input-group-text">Opt</label></div>
       <select  id = "sexIn" class="custom-select col-1"><option>F</option><option>M</option></select></div>
+    <div id = "ethCaDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "ethCaLab" class="input-group-text">Opt</label></div>
+      <select id = "intInec" class="custom-select col-1 "><option> = </option><option>></option><option><</option></select>
+      <select  id = "ethCaIn" class="custom-select col-2">
+        <option value="1">1. Hispanic or Latino</option>
+        <option value="2">2. Not Hispanic or Latino</option>
+      </select></div> 
     <div id = "ethnicDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "ethnicLab" class="input-group-text">Opt</label></div>
-      <select  id = "ethnicIn" class="custom-select col-2"><option>1- Hispanic or Latino</option><option>2 - Not Hispanic or Latino</option><option>210 - Europen</option><option>211 - Anglo-Saxon</option> <option>273 - Mexican Hispanic</option><option>290 - Other</option></select></div>
+      <select id = "intIne" class="custom-select col-1 "><option> = </option><option>></option><option><</option></select>
+      <select  id = "ethnicIn" class="custom-select col-2">
+        <option value="210">210. European</option>
+        <option value="211">211. Anglo–Saxon</option>
+        <option value="212">212. Northern European</option>
+        <option value="213">213. West European</option>
+        <option value="214">214. East European, Slavic</option>
+        <option value="215">215. Russian</option>
+        <option value="216" >216. Mediterranean</option>
+        <option value="220">220. African, sub-Saharan</option>
+        <option value="230">230. African, northeastern</option>
+        <option value="240">240. Southeast Asian</option>
+        <option value="250" > 250. All Other Asian</option>
+        <option value="260" >260. Native Americans</option>
+        <option value="270" >270. Admixed</option>
+        <option value="271">271. Hispanic</option>
+        <option value="272" >272. Puerto Rican Hispanic</option>
+        <option value="273" >273. Mexican Hispanic</option> 
+        <option value="289">280. Special Populations</option>
+        <option value="290">290. Other</option>
+      </select></div>
     <div id = "incomeDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "incomeLab" class="input-group-text">Opt</label></div>
-      <select  id = "incomeIn" class="custom-select col-2"><option>1 - $0-$15,000</option><option>2 - $15,001-$25,000</option><option>3 - $25,001-$40,000</option><option>4 - $40,001-$55,000</option><option>5 - $55,001-$75,000</option><option>6 - $75,001-$100,000</option> <option>7 - $100,001-$150,000</option><option>8. Greater than $150,001</option></select></div>
+      <select id = "intIni" class="custom-select col-1 "><option> = </option><option>></option><option><</option></select>
+      <select  id = "incomeIn" class="custom-select col-2">
+        <option value="1">1 - $0-$15,000</option>
+        <option value="2">2 - $15,001-$25,000</option>
+        <option value="3">3 - $25,001-$40,000</option>
+        <option value="4">4 - $40,001-$55,000</option>
+        <option value="5">5 - $55,001-$75,000</option>
+        <option value="6">6 - $75,001-$100,000</option> 
+        <option value="7">7 - $100,001-$150,000</option>
+        <option value="8">8. Greater than $150,001</option></select></div>
+    <div id = "raceDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "raceLab" class="input-group-text">Opt</label></div>
+      <select id = "intInr" class="custom-select col-1 "><option> = </option><option>></option><option><</option></select>
+      <select  id = "raceIn" class="custom-select col-2">
+        <option value="1">1. American Indian/Alaska Native</option>
+        <option value="2">2. Asian</option>
+        <option value="3">3. Native Hawaiian or Other Pacific Islander</option>
+        <option value="4">4. Black or African-American</option>
+        <option value="5">5. White</option>
+        <option value="6">6. More Than One Race</option></select></div>
+    <div id = "mildDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "mildLab" class="input-group-text">Opt</label></div>
+      <select id = "intInmd" class="custom-select col-1 "><option> = </option><option>></option><option><</option></select>
+      <select  id = "mildIn" class="custom-select col-2">
+        <option value="1">1. Honorable</option>
+        <option value="2">2. General</option>
+        <option value="3">3. Medical</option>
+        <option value="4">4. Without Honor</option>
+        <option value="5">5. Undesirable</option>
+        <option value="6">6. Dishonorable</option>
+        <option value="7">7. Not Discharged, Currently in Active or Reserve Military</option></select></div>
+    <div id = "marDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "marLab" class="input-group-text">Opt</label></div>
+      <select id = "intInmar" class="custom-select col-1 "><option> = </option><option>></option><option><</option></select>
+      <select  id = "marIn" class="custom-select col-1">
+        <option value="1">1. Married</option>
+        <option value="2">2. Separated</option>
+        <option value="3">3. Divorced</option>
+        <option value="4">4. Widowed</option>
+      <option value="5">5. Never Married</option></select></div>
+    <div id = "milrDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "milrLab" class="input-group-text">Opt</label></div>
+      <select id = "intInmr" class="custom-select col-1 "><option> = </option><option>></option><option><</option></select>
+      <select  id = "milrIn" class="custom-select col-2">
+        <option value="1">1. Never called up or never rejected (include females)</option>
+        <option value="2">2. Rejected for physical defect</option>
+        <option value="3">3. Rejected for low IQ</option>
+        <option value="4">4. Rejected for delinquency or criminal record</option>
+        <option value="5">5. Rejected for other psychiatric reasons</option>
+        <option value="6">6. Rejected for reasons uncertain</option></select></div>
+    <div id = "relDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "relLab" class="input-group-text">Opt</label></div>
+      <select id = "intInrl" class="custom-select col-1 "><option> = </option><option>></option><option><</option></select>
+      <select  id = "relIn" class="custom-select col-2">
+        <option value="1">1. Catholic</option>
+        <option value="2">2. Protestant</option>
+        <option value="3">3. Jewish</option>
+        <option value="4">4. Moslem</option>
+        <option value="5">5. Not Affiliated</option>
+        <option value="6">6. Other</option></select></div>
+    <div id = "cigDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "cigLab" class="input-group-text">Opt</label></div>
+      <select id = "intIncg" class="custom-select col-1 "><option> = </option><option>></option><option><</option></select>
+      <select  id = "cigIn" class="custom-select col-2">
+        <option value="0">0. No</option>
+        <option value="1">1. Yes, currently smoking</option>
+        <option value="2">2. Yes, smoked in the past</option></select></div>
+    <div id = "schDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "schLab" class="input-group-text">Opt</label></div>
+      <select id = "intInsh" class="custom-select col-1 "><option> = </option><option>></option><option><</option></select>
+      <select  id = "schIn" class="custom-select col-2">
+        <option value="1">1. Paranoid schizophrenia</option>
+        <option value="2">2. Disorganized schizophrenia</option>
+        <option value="3">3. Catatonic schizophrenia</option>
+        <option value="4">4. Undifferentiated schizophrenia</option>
+        <option value="5">5. Residual schizophrenia</option></select></div>
     <div  id = "boolDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "boolLab" class="input-group-text">Opt</label></div>
       <select  id = "boolIn" class="custom-select col-1"><option>true</option><option>false</option></select></div>
-    <div id = "marDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "marLab" class="input-group-text">Opt</label></div>
-      <select  id = "marIn" class="custom-select col-1"><option>Married</option><option>Never Married</option><option>Divorced</option><option>Separated</option><option>Widowed</option></select></div>
     <div id = "textDiv" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id="textLab">First and last name</span></div>
       <select id = "textIn1" class="custom-select col-1 "><option> = </option><option>LIKE</option><option>ILIKE</option></select>
       <input id = "textIn2" type="text" class="col-2"> 
@@ -131,7 +208,7 @@
     <ul class="list-group temp" id = "list"></ul>
     <p id="showData"></p>
    <div class="container"><div class="row"><div class="col-sm"></div><div class="col-sm"></div><div class="col-sm"></div>
-    <div class="col-sm"><div> <button id = "excel" type="button" class="btn btn-info btn-lg" >Save as Excel File</button></div></div></div>
+    <div class="col-sm"><div class="temp" id = 'btexcel'> <button id = "excel" type="button" class="btn btn-info btn-lg" >Save as Excel File</button></div></div></div>
   </div>
 </div>
   <div id = "check" class="form-check temp"><input type="checkbox" class="form-check-input" ><label class="form-check-label" >Check me out</label></div>

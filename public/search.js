@@ -37,16 +37,44 @@ $(document).ready(function(){
         $('#from').prop("disabled", true);
       }
     })
-    $( "#marIn" ).blur(function(){str = $("#marLab").text() + " = " + `'${$("#marIn").val()}'`; whereIn(str); $("#marDiv").hide();});
     $( "#sexIn" ).blur(function(){str = $("#sexLab").text() + " = " + `'${$("#sexIn").val()}'`; whereIn(str); $("#sexDiv").hide();});
-    $( "#ethnicIn" ).blur(function(){str = $("#ethnicLab").text() + " = " + `'${$("#ethnicIn").val()}'`; whereIn(str); $("#ethnicDiv").hide();});
-    $( "#incomeIn" ).blur(function(){str = $("#incomeLab").text() + " = " + `'${$("#incomeIn").val()}'`; whereIn(str); $("#incomeDiv").hide();});
+    $( "#ethnicIn" ).blur(function(){
+      str1 = $("#ethnicLab").text() +" "+ $("#intIne").val() + " ";
+      str2 = $("#ethnicIn").val(); str=str1+str2; whereIn(str); $("#ethnicDiv").hide();});
+    $( "#ethCaIn" ).blur(function(){
+      str1 = $("#ethCaLab").text() +" "+ $("#intInec").val() + " ";
+      str2 = $("#ethCaIn").val(); str=str1+str2; whereIn(str); $("#ethCaDiv").hide();}); 
+    $( "#incomeIn" ).blur(function(){
+      str1 = $("#incomeLab").text() + " " + $("#intIni").val() + " ";
+      str2 = $("#incomeIn").val(); str=str1+str2; whereIn(str); $("#incomeDiv").hide();});
+    $( "#raceIn" ).blur(function(){
+      str1 = $("#raceLab").text() + " " + $("#intInr").val() + " ";
+      str2 = $("#raceIn").val(); str=str1+str2; whereIn(str); $("#raceDiv").hide();});
+    $( "#marIn" ).blur(function(){
+      str1 = $("#marLab").text() + " " + $("#intInmar").val() + " ";
+      str2 = $("#marIn").val(); str=str1+str2; whereIn(str); $("#marDiv").hide();});
+    $( "#mildIn" ).blur(function(){
+      str1 = $("#mildLab").text() + " " + $("#intInmd").val() + " ";
+      str2 = $("#mildIn").val(); str=str1+str2; whereIn(str); $("#mildDiv").hide();});
+    $( "#milrIn" ).blur(function(){
+      str1 = $("#milrLab").text() + " " + $("#intInmr").val() + " ";
+      str2 = $("#milrIn").val(); str=str1+str2; whereIn(str); $("#milrDiv").hide();}); 
+    $( "#relIn" ).blur(function(){
+      str1 = $("#relLab").text() + " " + $("#intInrl").val() + " ";
+      str2 = $("#relIn").val(); str=str1+str2; whereIn(str); $("#relDiv").hide();}); 
+    $( "#cigIn" ).blur(function(){
+      str1 = $("#cigLab").text() + " " + $("#intIncg").val() + " ";
+      str2 = $("#cigIn").val(); str=str1+str2; whereIn(str); $("#cigDiv").hide();});
+    $( "#schIn" ).blur(function(){
+      str1 = $("#schLab").text() + " " + $("#intInsh").val() + " ";
+      str2 = $("#schIn").val(); str=str1+str2; whereIn(str); $("#schDiv").hide();});
     $( "#boolIn" ).blur(function(){str = $("#boolLab").text() + " = " + $("#boolIn").val(); whereIn(str); $("#boolDiv").hide();});
     $( "#textIn2" ).blur(function(){str1 = $("#textLab").text() + " " + $("#textIn1").val() + " ";
       str2 = `'${$("#textIn2").val()}'`; str = str1 + str2; whereIn(str); $("#textDiv").hide();});
     $( "#dateIn2" ).blur(function(){str1 = $("#dateLab").text() + " " + $("#dateIn1").val() + " ";
       str2 = `'${$("#dateIn2").val()}'`; str = str1 + str2; whereIn(str); $("#dateDiv").hide();});
-    $( "#intIn2" ).blur(function(){str1 = $("#intLab").text() + " " + $("#intIn1").val() + " ";
+    $( "#intIn2" ).blur(function(){
+      str1 = $("#intLab").text() + " " + $("#intIn1").val() + " ";
       str2 = $("#intIn2").val(); str = str1 + str2; whereIn(str); $("#intDiv").hide();});
     $( "#realIn2" ).blur(function(){str1 = $("#realLab").text() + " " + $("#realIn1").val() + " ";
       str2 = $("#realIn2").val(); str = str1 + str2; whereIn(str); $("#realDiv").hide();});
@@ -92,14 +120,15 @@ $(document).ready(function(){
       qArr = getQueryArr(count);
       singleRequstArr = getSingleRequestArr(qArr);
       $("#list").show();
+       $("#btexcel").show();
       $("#list").empty();
-      ajaxSingleReq(singleRequstArr);
+      arrAllSing = arrOfAllsigleReq(singleRequstArr);
+      ajaxSingleReq(arrAllSing);
       var fromAll = queryFromAll(qArr);
       strSelect=$('#select').val();
       queryStr='SELECT '+strSelect+strJoin+' WHERE '+fromAll+';';
       createTable(queryStr);
-      $("#excel").show();
-      console.log(queryStr);
+      //console.log(queryStr);
     });  
     $("#excel").click(function(){
       $("#showData").table2excel({

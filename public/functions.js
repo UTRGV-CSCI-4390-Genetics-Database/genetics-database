@@ -93,16 +93,24 @@ const checkBox = function(key1){
   }
   const whereConditions = function(key1, value1){
     if(value1=='boolean'){$("#boolDiv").show(); $("#boolLab").text(key1);}
-    else if(value1 == "text"){
+    else if(value1 == "text" || value1 == 'character'){
+      if(key1 == "sex" || key1 == "gender"){$("#sexDiv").show(); $("#sexLab").text(key1);}
+      else{$("#textDiv").show(); $("#textLab").text(key1);}
+    }
+    else if(value1 == "integer" || value1 == "smallint" || value1 == 'bigint'){
       if(key1 == "ethnicity" || key1 == "father_ethnicity_1" || key1 == "father_ethnicity_2" || key1 == "father_ethnicity_3" || key1 == "father_ethnicity_4" || key1 == "mother_ethnicity_1" || key1 == "mother_ethnicity_2" ||key1 == "mother_ethnicity_3" ||key1 == "mother_ethnicity_4")
         {$("#ethnicDiv").show(); $("#ethnicLab").text(key1);}
+      else if(key1 == 'ethnic_category'){$("#ethCaDiv").show(); $("#ethCaLab").text(key1);}
       else if(key1 == "approximate_income"){$("#incomeDiv").show(); $("#incomeLab").text(key1);}
+      else if(key1 == "reported_race"){$("#raceDiv").show(); $("#raceLab").text(key1);}
       else if(key1 == "marital_status"){$("#marDiv").show(); $("#marLab").text(key1);}
-      else if(key1 == "sex" || key1 == "gender"){$("#sexDiv").show(); $("#sexLab").text(key1);}
-      else{$("#textDiv").show(); $("#textLab").text(key1);}
-      }
-    else if(value1 == "integer" || value1 == "smallint" || value1 == 'bigint')
-                            {$("#intDiv").show(); $("#intLab").text(key1); $("#intLabB").text(key1+ " BETWEEN");}
+      else if(key1 == "military_discharge"){$("#mildDiv").show(); $("#mildLab").text(key1);}
+      else if(key1 == "military_rejected"){$("#milrDiv").show(); $("#milrLab").text(key1);}
+      else if(key1 == "religion"){$("#relDiv").show(); $("#relLab").text(key1);}
+      else if(key1 == "smoked_cigarettes"){$("#cigDiv").show(); $("#cigLab").text(key1);}
+      else if(key1 == "schizophrenia"){$("#schDiv").show(); $("#schLab").text(key1);}
+      else{$("#intDiv").show(); $("#intLab").text(key1); $("#intLabB").text(key1+ " BETWEEN");}
+    }                              
     else if(value1 == "date"){$("#dateDiv").show(); $("#dateLab").text(key1); $("#dateLabB").text(key1 + " BETWEEN");}
     else if(value1 == "real"){$("#realDiv").show(); $("#realLab").text(key1); $("#realLabB").text(key1 + " BETWEEN");}
   }
@@ -156,33 +164,44 @@ const getSingleRequestArr = function(arr){
     }
     return newArr;
 }
-const ajaxSingleReq = function(arr){
-  lic = 0;
-  tempArr=[];
-  str = "SELECT COUNT(*) ";
-  arr.forEach(function(elem){
-    temp = Object.entries(elem)[0];
+
+const arrOfAllsigleReq = function(arr){
+  newArr = [];
+  count = 0;
+  for(i=0; i<arr.length; i++){
+    temp = Object.entries(arr[i])[0];
     str1 = "FROM " + temp[0] + " WHERE ";
-    newArr = temp[1];
-    newArr.forEach(function(elem1){
-      req1 = str1 + elem1;
-      req = {request: str + req1 + ';'};
-      tempArr.push(req1)
-      console.log(req1);
-      $.ajax({
-        url: '/results',
-        method: "POST",
-        contentType: 'application/json',
-        data: JSON.stringify({obj: req}),
-        success: function(res){
-          var myl =  `<li class="list-group-item d-flex justify-content-between align-items-center" >${tempArr[lic]} <span class="badge badge-primary badge-pill">${res[0].count}</span></li>`;
-          $("#list").append(myl);
-          lic++;
-        }
-      });
-    })
+    tempArr = temp[1];
+    for(j=0; j<tempArr.length; j++){
+      if(tempArr[j]==''|| tempArr[j]==' '|| tempArr[j]=='  '){}
+      else{
+        tempStr = str1+tempArr[j];
+        newArr.push(tempStr);
+        var myl=`<li class="list-group-item d-flex justify-content-between align-items-center" >${tempStr} <span class="badge badge-primary badge-pill " id=${'count'+count}>${count}</span></li>`
+        $("#list").append(myl);
+        count++;
+      }
+    }
+  }
+  return newArr;
+}
+const ajaxSingleReq = function(arr){
+  c=0;
+  arr.forEach(function(elem){
+    req = {request: "SELECT COUNT(*) "+ elem + ';'};
+    $.ajax({
+      url: '/results',
+      method: "POST",
+      contentType: 'application/json',
+      data: JSON.stringify({obj: req}),
+      success: function(res){
+        $('#count'+c).text(res[0].count)
+        c++;
+      }
+    });
   })
 }
+
 function CreateTableFromJSON(myTable) {
   var col = [];
   for (var i = 0; i < myTable.length; i++) {

@@ -56,7 +56,7 @@ app.get('/update', function(req, res){
 app.get('/delete', function(req, res){
     res.sendFile(`${__dirname }/public/delete.html`);})
 app.post('/results', async function(req, res){
-    //console.log(req.body.obj.request);
+    console.log(req.body.obj.request);
     var table = await read(req.body.obj.request);
     //console.log(table);
     res.send(table);});

@@ -79,17 +79,17 @@ $(document).ready(function(){
     $( "#realIn2" ).blur(function(){str1 = $("#realLab").text() + " " + $("#realIn1").val() + " ";
       str2 = $("#realIn2").val(); str = str1 + str2; whereIn(str); $("#realDiv").hide();});
     $( "#dateIn1" ).blur(function(){
-      if($("#dateIn1").val()=="between"){$("#dateDiv").hide(); $("#dateDivB").show();}});
+      if($("#dateIn1").val()=="BETWEEN"){$("#dateDiv").hide(); $("#dateDivB").show();}});
     $( "#intIn1" ).blur(function(){
-      if($("#intIn1").val()=="between"){$("#intDiv").hide(); $("#intDivB").show();}});
+      if($("#intIn1").val()=="BETWEEN"){$("#intDiv").hide(); $("#intDivB").show();}});
     $( "#realIn1" ).blur(function(){
-      if($("#realIn1").val()=="between"){$("#realDiv").hide(); $("#realDivB").show();}}); 
+      if($("#realIn1").val()=="BETWEEN"){$("#realDiv").hide(); $("#realDivB").show();}}); 
     $( "#dateIn2B" ).blur(function(){str1 = $("#dateLabB").text() + " " + `'${$("#dateIn1B").val()}'`;
-      str2 = " AND " + `'${$("#dateIn2B").val()}'`; str = str1 + str2; whereIn(str); $("#dateDivB").hide();});
+      str2 = " and " + `'${$("#dateIn2B").val()}'`; str = str1 + str2; whereIn(str); $("#dateDivB").hide();});
     $( "#intIn2B" ).blur(function(){str1 = $("#intLabB").text() + " " + `'${$("#intIn1B").val()}'`;
-      str2 = " AND " + `'${$("#intIn2B").val()}'`; str = str1 + str2; whereIn(str); $("#intDivB").hide();});
+      str2 = " and " + `'${$("#intIn2B").val()}'`; str = str1 + str2; whereIn(str); $("#intDivB").hide();});
     $( "#realIn2B" ).blur(function(){str1 = $("#realLabB").text() + " " + `'${$("#realIn1B").val()}'`;
-      str2 = " AND " + `'${$("#realIn2B").val()}'`; str = str1 + str2; whereIn(str); $("#realDivB").hide();});
+      str2 = " and " + `'${$("#realIn2B").val()}'`; str = str1 + str2; whereIn(str); $("#realDivB").hide();});
     $("#par1").click(function(){whereIn("(");});
     $("#par2").click(function(){whereIn(")");});
     $("#and").click(function(){whereIn(" AND ");});

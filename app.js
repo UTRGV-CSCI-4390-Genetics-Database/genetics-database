@@ -40,7 +40,7 @@ async function read(text){
     return results.rows;
     }
     catch(e){
-        return [];
+        console.error(`Problem - ${e}`);
     }
 }
 app.get('/home', function(req, res){
@@ -58,7 +58,7 @@ app.get('/delete', function(req, res){
 app.post('/results', async function(req, res){
     console.log(req.body.obj.request);
     var table = await read(req.body.obj.request);
-    //console.log(table);
+    console.log(table);
     res.send(table);});
 app.post('/schema', async function(req, res){
     var obj = req.body.obj;

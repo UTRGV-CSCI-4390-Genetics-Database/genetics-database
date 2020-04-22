@@ -1,6 +1,5 @@
 var table = '';
 obj = {};
-str3 = "SELECT COUNT(*) FROM actor;";
 str1 = {request: "SELECT * FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema';"}
 function tableNames(res){
     var myArr = [];
@@ -9,9 +8,7 @@ function tableNames(res){
     }
     return myArr;
 }
-//var elem = jQuery('<h5>');
-//$(elem).text(res[i].tablename);
-//$("#place").append(elem.clone());
+
 $(document).ready(function(){
     $("#bt1").click(function(){
         $.ajax({

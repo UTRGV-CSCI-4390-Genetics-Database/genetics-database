@@ -263,11 +263,43 @@ const createTable = function(str){
     }
 });
 }
-//strJoin =  "FROM individuals JOIN medical_history ON individuals.subject_id = medical_history.subject_id JOIN biological_measurements ON medical_history.subject_id = biological_measurements.subject_id JOIN demographics ON biological_measurements.subject_id = demographics.subject_id JOIN psychiatric_disorders ON demographics.subject_id = psychiatric_disorders.subject_id JOIN project_enrollments ON psychiatric_disorders.subject_id = project_enrollments.individual_id JOIN projects ON project_enrollments.project_id = projects.id JOIN category_individuals ON individuals.subject_id = category_individuals.subject_id JOIN categories ON category_individuals.category_id = categories.id JOIN category_markers ON categories.id = category_markers.category_id JOIN markers ON category_markers.marker_name = markers_marker_name JOIN blood_samples ON individuals.subject_id = blood_samples.subject.id ";
-//strSelect = "SELECT individuals.sex, medical_history.allergies, individuals.name, individuals.is_genotyped, biological_measurements.weight_kg "
-strJoin =  " FROM individuals JOIN medical_history ON individuals.subject_id = medical_history.subject_id JOIN biological_measurements ON medical_history.subject_id = biological_measurements.subject_id JOIN demographics ON biological_measurements.subject_id = demographics.subject_id JOIN psychiatric_disorders ON demographics.subject_id = psychiatric_disorders.subject_id "
-//strSelect = "SELECT individuals.sex, individuals.name, individuals.is_genotyped "
-//strJoin =  "FROM individuals JOIN category_individuals ON individuals.subject_id = category_individuals.subject_id " 
 
-strWhere = "WHERE individuals.sex = 'M' AND individuals.is_genotyped = true AND biological_measurements.weight_kg  > 100;"
+const trueSQL= function(str, arr, obj){
+  newStr="";
+  newArr=str.split('?');
+  for(i=0; i<arr.length; i++){
+    arr1=newArr[i].split('.');
+    if(arr1.length>1){
+      arr10=arr1[0].split(' ');
+      arr11=arr1[1].split(' ');
+      str0=arr10[arr10.length-1];
+      str1=arr11[0];
+      str2=str0+'.'+str1;
+      if(obj[str2]=='boolean'){
+        if(arr[i] == 1){myval= true}
+        else{myval= false};
+      }
+      else{myval=arr[i]};
+    }
+    else{myval=arr[i]}
+    newStr=newStr+newArr[i]+myval;
+  }
+  newStr=newStr+newArr[newArr.length-1];
+  return newStr;
+};
+
+
+//strJoin =  "FROM individuals JOIN medical_history ON individuals.subject_id = medical_history.subject_id JOIN biological_measurements ON medical_history.subject_id = biological_measurements.subject_id JOIN demographics ON biological_measurements.subject_id = demographics.subject_id JOIN psychiatric_disorders ON demographics.subject_id = psychiatric_disorders.subject_id JOIN project_enrollments ON psychiatric_disorders.subject_id = project_enrollments.individual_id JOIN projects ON project_enrollments.project_id = projects.id JOIN category_individuals ON individuals.subject_id = category_individuals.subject_id 
+//JOIN categories ON category_individuals.category_id = categories.id JOIN category_markers ON categories.id = category_markers.category_id JOIN markers ON category_markers.marker_name = markers_marker_name JOIN blood_samples ON individuals.subject_id = blood_samples.subject.id ";
+//strSelect = "SELECT individuals.sex, medical_history.allergies, individuals.name, individuals.is_genotyped, biological_measurements.weight_kg "
+
+strJoin =  " FROM individuals JOIN medical_history ON individuals.subject_id = medical_history.subject_id JOIN biological_measurements ON medical_history.subject_id = biological_measurements.subject_id JOIN demographics ON biological_measurements.subject_id = demographics.subject_id JOIN psychiatric_disorders ON demographics.subject_id = psychiatric_disorders.subject_id LEFT JOIN category_individuals ON psychiatric_disorders.subject_id = category_individuals.subject_id LEFT JOIN categories ON category_individuals.subject_id = categories.id "
+
+//strJoin =  " FROM projects JOIN project_enrollments ON projects.id = project_enrollments.project_id JOIN individuals ON project_enrollments.individual_id = individuals.subject_id "
+
+//strSelect = "SELECT individuals.sex, individuals.name, individuals.is_genotyped ""
+//strSelect = "SELECT individuals.sex, individuals.name, individuals.is_genotyped "
+//strJoin =  " FROM individuals LEFT JOIN category_individuals ON individuals.subject_id = category_individuals.subject_id " 
+
+//strWhere = "WHERE individuals.sex = 'M' AND individuals.is_genotyped = true AND biological_measurements.weight_kg  > 100;"
 

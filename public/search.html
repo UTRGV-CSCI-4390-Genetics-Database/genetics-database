@@ -1,18 +1,20 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Search</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="auxil/query-builder.css"/>
     <link rel="stylesheet" href="index.css"> 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="jquery.table2excel.js"></script>
-   <title>Search</title>
 </head>
 <body>
-<div class="container-fluid"><nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <a class="nav-item nav-link" href="/home">Home</a>
@@ -23,201 +25,45 @@
       <a class="nav-item nav-link" href="/about">About</a>
     </div>
   </div>
-
 </nav>
-<div class="h-divider1"></div>  <div class="h-divider4"></div>
- <h4>Select: </h4>
- <div class="input-group mb-3 col-9">
-  <div class="input-group-prepend">
-    <button id = "bt1" class="btn btn-outline-secondary" type="button">Select...</button>
-  </div>
-  <input id = "select" type="text" class="form-control" placeholder="Select column names..." aria-describedby="basic-addon1">
-</div>
-  <div id="accordion" class="col-5" >
-    <div class="card temp ">
-      <div class="card-header" id="headingOne">
-        <h6 class="mb-0">
-         <button class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#One" aria-expanded="false" aria-controls="collapseOne">
-            name </button></h6>
-      </div>
-      <div id="One" class="collapse" aria-labelledby="headingOne" data-parent="#accordion"> <div class="card-body"> </div></div>
-    </div>
-  </div>
+<div class="container-fluid"> 
   <div class="h-divider1"></div>  <div class="h-divider4"></div>
-  <h4>From: </h4>
-  <div class="form-group row">  <div class="col-3"> 
-    <select class="form-control" id = "from" > <option id = "from1">Select table...</option></select></div></div>
-  <div class="h-divider1"></div>  <div class="h-divider4"></div>
-  <h4>Where: </h4>
-  <div class="btn-toolbar" role="toolbar">
-    <div id = "where" class="input-group col-9">
-      <div class="input-group-prepend">
-        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select</button>
-        <div class="dropdown-menu">
-          <a id = "where1" class="dropdown-item" href="#"></a>
+    <div id="builder"></div>
+    <button class="btn btn-warning" id="reset">Reset</button>
+     <div id = "check" class="form-check temp"><input type="checkbox" class="form-check-input" ><label class="form-check-label" >Check me out</label></div>
+     <div class="h-divider1"></div>  <div class="h-divider4"></div>
+     <div class="btn-group">
+     <button id = "bt1" class="btn btn-primary btn-lg" type="button">Select columns</button>
+     <button id = "run" type="button" class="btn btn-success btn-lg" >Run your query</button></div>
+        <div id="accordion" class="col-5" >
+          <div class="card temp ">
+            <div class="card-header" id="headingOne">
+              <h6 class="mb-0"><button class="btn btn-outline-secondary btn-sm"  data-toggle="collapse" data-target="#One" aria-expanded="false" aria-controls="collapseOne">name </button></h6>
+              </div>
+            <div id="One" class="collapse" aria-labelledby="headingOne" data-parent="#accordion"> <div class="card-body"> </div>
+          </div>
+          </div>
         </div>
-      </div>
-      <input id = "whereIn" type="text" class="form-control" placeholder= "Select conditions...">
+      
+      <ul class="list-group temp" id = "list"></ul>
+      <p id="showData"></p>
+      <div class="temp" id = 'btexcel'> <button id = "excel" type="button" class="btn btn-success btn-lg" >Save as Excel File</button></div>
+    <button id='guz'>taki moj guzik </button>
     </div>
-    <div class="btn-group" role="group">
-      <button id = "par1" type="button" class="btn btn-outline-secondary">(</button>
-      <button id = "par2" type="button" class="btn btn-outline-secondary">)</button>
-      <button id = "and" type="button" class="btn btn-outline-secondary">AND</button>
-      <button id = "or" type="button" class="btn btn-outline-secondary">OR</button>
-      <button id = "del" type="button" class="btn btn-outline-danger">X</button>
-    </div></div>
-
-    <div id = "sexDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "sexLab" class="input-group-text">Opt</label></div>
-      <select  id = "sexIn" class="custom-select col-1"><option>F</option><option>M</option></select></div>
-    <div id = "ethCaDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "ethCaLab" class="input-group-text">Opt</label></div>
-      <select id = "intInec" class="custom-select col-1 "><option>=</option><option>></option><option>>=</option><option><</option><option><=</option><option>BETWEEN</option></select>
-      <select  id = "ethCaIn" class="custom-select col-2">
-        <option value="1">1. Hispanic or Latino</option>
-        <option value="2">2. Not Hispanic or Latino</option>
-      </select></div> 
-    <div id = "ethnicDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "ethnicLab" class="input-group-text">Opt</label></div>
-      <select id = "intIne" class="custom-select col-1 "><option>=</option><option>></option><option>>=</option><option><</option><option><=</option><option>BETWEEN</option></select>
-      <select  id = "ethnicIn" class="custom-select col-2">
-        <option value="210">210. European</option>
-        <option value="211">211. Anglo–Saxon</option>
-        <option value="212">212. Northern European</option>
-        <option value="213">213. West European</option>
-        <option value="214">214. East European, Slavic</option>
-        <option value="215">215. Russian</option>
-        <option value="216" >216. Mediterranean</option>
-        <option value="220">220. African, sub-Saharan</option>
-        <option value="230">230. African, northeastern</option>
-        <option value="240">240. Southeast Asian</option>
-        <option value="250" > 250. All Other Asian</option>
-        <option value="260" >260. Native Americans</option>
-        <option value="270" >270. Admixed</option>
-        <option value="271">271. Hispanic</option>
-        <option value="272" >272. Puerto Rican Hispanic</option>
-        <option value="273" >273. Mexican Hispanic</option> 
-        <option value="289">280. Special Populations</option>
-        <option value="290">290. Other</option>
-      </select></div>
-    <div id = "incomeDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "incomeLab" class="input-group-text">Opt</label></div>
-      <select id = "intIni" class="custom-select col-1 "><option>=</option><option>></option><option>>=</option><option><</option><option><=</option><option>BETWEEN</option></select>
-      <select  id = "incomeIn" class="custom-select col-2">
-        <option value="1">1 - $0-$15,000</option>
-        <option value="2">2 - $15,001-$25,000</option>
-        <option value="3">3 - $25,001-$40,000</option>
-        <option value="4">4 - $40,001-$55,000</option>
-        <option value="5">5 - $55,001-$75,000</option>
-        <option value="6">6 - $75,001-$100,000</option> 
-        <option value="7">7 - $100,001-$150,000</option>
-        <option value="8">8. Greater than $150,001</option></select></div>
-    <div id = "raceDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "raceLab" class="input-group-text">Opt</label></div>
-      <select id = "intInr" class="custom-select col-1 "><option>=</option><option>></option><option>>=</option><option><</option><option><=</option><option>BETWEEN</option></select>
-      <select  id = "raceIn" class="custom-select col-2">
-        <option value="1">1. American Indian/Alaska Native</option>
-        <option value="2">2. Asian</option>
-        <option value="3">3. Native Hawaiian or Other Pacific Islander</option>
-        <option value="4">4. Black or African-American</option>
-        <option value="5">5. White</option>
-        <option value="6">6. More Than One Race</option></select></div>
-    <div id = "mildDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "mildLab" class="input-group-text">Opt</label></div>
-      <select id = "intInmd" class="custom-select col-1 "><option>=</option><option>></option><option>>=</option><option><</option><option><=</option><option>BETWEEN</option></select>
-      <select  id = "mildIn" class="custom-select col-2">
-        <option value="1">1. Honorable</option>
-        <option value="2">2. General</option>
-        <option value="3">3. Medical</option>
-        <option value="4">4. Without Honor</option>
-        <option value="5">5. Undesirable</option>
-        <option value="6">6. Dishonorable</option>
-        <option value="7">7. Not Discharged, Currently in Active or Reserve Military</option></select></div>
-    <div id = "marDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "marLab" class="input-group-text">Opt</label></div>
-      <select id = "intInmar" class="custom-select col-1 "><option>=</option><option>></option><option>>=</option><option><</option><option><=</option><option>BETWEEN</option></select>
-      <select  id = "marIn" class="custom-select col-1">
-        <option value="1">1. Married</option>
-        <option value="2">2. Separated</option>
-        <option value="3">3. Divorced</option>
-        <option value="4">4. Widowed</option>
-      <option value="5">5. Never Married</option></select></div>
-    <div id = "milrDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "milrLab" class="input-group-text">Opt</label></div>
-      <select id = "intInmr" class="custom-select col-1 "><option>=</option><option>></option><option>>=</option><option><</option><option><=</option><option>BETWEEN</option></select>
-      <select  id = "milrIn" class="custom-select col-2">
-        <option value="1">1. Never called up or never rejected (include females)</option>
-        <option value="2">2. Rejected for physical defect</option>
-        <option value="3">3. Rejected for low IQ</option>
-        <option value="4">4. Rejected for delinquency or criminal record</option>
-        <option value="5">5. Rejected for other psychiatric reasons</option>
-        <option value="6">6. Rejected for reasons uncertain</option></select></div>
-    <div id = "relDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "relLab" class="input-group-text">Opt</label></div>
-      <select id = "intInrl" class="custom-select col-1 "><option>=</option><option>></option><option>>=</option><option><</option><option><=</option><option>BETWEEN</option></select>
-      <select  id = "relIn" class="custom-select col-2">
-        <option value="1">1. Catholic</option>
-        <option value="2">2. Protestant</option>
-        <option value="3">3. Jewish</option>
-        <option value="4">4. Moslem</option>
-        <option value="5">5. Not Affiliated</option>
-        <option value="6">6. Other</option></select></div>
-    <div id = "cigDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "cigLab" class="input-group-text">Opt</label></div>
-      <select id = "intIncg" class="custom-select col-1 "><option>=</option><option>></option><option>>=</option><option><</option><option><=</option><option>BETWEEN</option></select> 
-      <select  id = "cigIn" class="custom-select col-2">
-        <option value="0">0. No</option>
-        <option value="1">1. Yes, currently smoking</option>
-        <option value="2">2. Yes, smoked in the past</option></select></div>
-    <div id = "schDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "schLab" class="input-group-text">Opt</label></div>
-      <select id = "intInsh" class="custom-select col-1 "><option>=</option><option>></option><option>>=</option><option><</option><option><=</option><option>BETWEEN</option></select>
-      <select  id = "schIn" class="custom-select col-2">
-        <option value="1">1. Paranoid schizophrenia</option>
-        <option value="2">2. Disorganized schizophrenia</option>
-        <option value="3">3. Catatonic schizophrenia</option>
-        <option value="4">4. Undifferentiated schizophrenia</option>
-        <option value="5">5. Residual schizophrenia</option></select></div>
-    <div  id = "boolDiv" class="input-group mar temp"><div class="input-group-prepend"><label id = "boolLab" class="input-group-text">Opt</label></div>
-      <select  id = "boolIn" class="custom-select col-1"><option>true</option><option>false</option></select></div>
-    <div id = "textDiv" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id="textLab">First and last name</span></div>
-      <select id = "textIn1" class="custom-select col-1 "><option> = </option><option>LIKE</option><option>ILIKE</option><option> NOT LIKE</option><option>NOT ILIKE</option></select>
-      <input id = "textIn2" type="text" class="col-2"> 
-      <span class="mar">LIKE can be used with (%) for matching any sequence of characters and with (_)  for matching any single character. <a href="https://www.postgresqltutorial.com/postgresql-like/" target="_blank">More info here...</a></span></div> 
-    <div id = "intDiv" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id="intLab">First and last name</span></div>
-      <select id = "intIn1" class="custom-select col-1 "></select>
-      <input id = "intIn2" type="number"  min = '0' class="col-2"></div>
-    <div id = "realDiv" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id="realLab">First and last name</span></div>
-      <select id = "realIn1" class="custom-select col-1 "><option>=</option><option>></option><option>>=</option><option><</option><option><=</option><option>BETWEEN</option></select>
-      <input id = "realIn2" type="number" step = '0.01' min = '0' class="col-2"></div>
-    <div id = "dateDiv" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id="dateLab">First and last name</span></div>
-      <select id = "dateIn1" class="custom-select col-1 "><option>=</option><option>></option><option>>=</option><option><</option><option><=</option><option>BETWEEN</option></select>
-      <input id = "dateIn2" type="date" class="col-2"></div>
-    <div id = "dateDivB" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id = "dateLabB">$</span></div>
-      <input id = "dateIn1B" type="date" class="form-control col-2"><span class="input-group-text">AND</span>
-      <input id = "dateIn2B" type="date" class="form-control col-2"></div>
-    <div id = "intDivB" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id = "intLabB">$</span></div>
-      <input id = "intIn1B" type="number"  min = '0'class="form-control col-2"><span class="input-group-text">AND</span>
-      <input id = "intIn2B" type="number"  min = '0' class="form-control col-2"></div>
-    <div id = "realDivB" class="input-group mar temp"><div class="input-group-prepend"><span class="input-group-text" id = "realLabB">$</span></div>
-      <input id = "realIn1B" type="number" step = '0.01' min = '0' class="form-control col-2"><span class="input-group-text">AND</span>
-      <input id = "realIn2B" type="number" step = '0.01' min = '0' class="form-control col-2"></div> 
-
-  <div class="h-divider1"></div>  <div class="h-divider4"></div>
-  <h5>SELECT:  <span id = "select2" class = "font"></span></h5>
-    <div id = "fromContainer">
-        <h5 id = "szlag0">FROM:  <span id = "from20" class = "font"></span> WHERE: 
-        <a id = "where20" class = "font" href="#"></a></h5>
-    </div>
-    <div class="h-divider"></div>
-    <button id = "moreTable" type="button" class="btn btn-outline-secondary">More table...</button>
-    <div class="h-divider1"></div>  <div class="h-divider4"></div>
-  <div class="container"><div class="row"><div class="col-sm"></div><div class="col-sm"></div><div class="col-sm"></div>
-    <div class="col-sm"><div> <button id = "run" type="button" class="btn btn-info btn-lg" >Run your query</button></div></div></div>
-  </div>
-  <div class="h-divider1"></div>  <div class="h-divider4"></div>
-    <ul class="list-group temp" id = "list"></ul>
-    <p id="showData"></p>
-   <div class="container"><div class="row"><div class="col-sm"></div><div class="col-sm"></div><div class="col-sm"></div>
-    <div class="col-sm"><div class="temp" id = 'btexcel'> <button id = "excel" type="button" class="btn btn-info btn-lg" >Save as Excel File</button></div></div></div>
-  </div>
-</div>
-  <div id = "check" class="form-check temp"><input type="checkbox" class="form-check-input" ><label class="form-check-label" >Check me out</label></div>
-    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery-2.x-git.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src='auxil/jquery-extendext.js'></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script type="text/javascript" src="auxil/doT.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="auxil/selectize.js"></script>
+    <link rel="stylesheet" href="chosenjs/chosen.min.css">
+    <script src="chosenjs/chosen.jquery.min.js"></script>
+    <script src="auxil/query-builder.js"></script>
     <script src="data.js"></script>
     <script src="functions.js"></script>
+    <script src="auxil/jquery.table2excel.js"></script>
     <script src="search.js"></script>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
+    <link rel="stylesheet" type="text/css" href="auxil/selectize.css" />
+  </body>
 </html>

@@ -80,6 +80,7 @@ const checkBox = function(key1){
     $ ("#select").val(str);
     $ ("#select2").text(str);
     $("#accordion").hide();
+    $("#run").attr('disabled', false); 
     return str;
   };
   const whereColList = function(from){
@@ -261,7 +262,7 @@ const createTable = function(str){
     success: function(myTable){
       CreateTableFromJSON(myTable);
     }
-});
+  });
 }
 
 const trueSQL= function(str, arr, obj){
@@ -293,7 +294,7 @@ const trueSQL= function(str, arr, obj){
 //JOIN categories ON category_individuals.category_id = categories.id JOIN category_markers ON categories.id = category_markers.category_id JOIN markers ON category_markers.marker_name = markers_marker_name JOIN blood_samples ON individuals.subject_id = blood_samples.subject.id ";
 //strSelect = "SELECT individuals.sex, medical_history.allergies, individuals.name, individuals.is_genotyped, biological_measurements.weight_kg "
 
-strJoin =  " FROM individuals JOIN medical_history ON individuals.subject_id = medical_history.subject_id JOIN biological_measurements ON medical_history.subject_id = biological_measurements.subject_id JOIN demographics ON biological_measurements.subject_id = demographics.subject_id JOIN psychiatric_disorders ON demographics.subject_id = psychiatric_disorders.subject_id LEFT JOIN category_individuals ON psychiatric_disorders.subject_id = category_individuals.subject_id LEFT JOIN categories ON category_individuals.subject_id = categories.id "
+//strJoin =  " FROM individuals JOIN medical_history ON individuals.subject_id = medical_history.subject_id JOIN biological_measurements ON medical_history.subject_id = biological_measurements.subject_id JOIN demographics ON biological_measurements.subject_id = demographics.subject_id JOIN psychiatric_disorders ON demographics.subject_id = psychiatric_disorders.subject_id LEFT JOIN category_individuals ON psychiatric_disorders.subject_id = category_individuals.subject_id LEFT JOIN categories ON category_individuals.subject_id = categories.id "
 
 //strJoin =  " FROM projects JOIN project_enrollments ON projects.id = project_enrollments.project_id JOIN individuals ON project_enrollments.individual_id = individuals.subject_id "
 
@@ -303,3 +304,19 @@ strJoin =  " FROM individuals JOIN medical_history ON individuals.subject_id = m
 
 //strWhere = "WHERE individuals.sex = 'M' AND individuals.is_genotyped = true AND biological_measurements.weight_kg  > 100;"
 
+const getSubjectData= function(str){
+  req = {request: str};
+  $.ajax({
+    url: '/results',
+    method: "POST",
+    contentType: 'application/json',
+    data: JSON.stringify({obj: req}),
+    success: function(res){
+     console.log(res);
+    }
+  });
+}
+
+
+
+strJoin = " FROM individuals JOIN demographics ON individuals.subject_id = demographics.subject_id JOIN medical_history ON individuals.subject_id = medical_history.subject_id JOIN psychiatric_disorders ON individuals.subject_id = psychiatric_disorders.subject_id LEFT JOIN biological_measurements bm ON individuals.subject_id = bm.subject_id LEFT JOIN blood_samples ON individuals.subject_id = blood_samples.subject_id LEFT JOIN project_enrollments pe ON individuals.subject_id = pe.individual_id LEFT JOIN projects p ON pe.project_id = p.id LEFT JOIN category_individuals ON individuals.subject_id = category_individuals.subject_id LEFT JOIN categories c on category_individuals.category_id = c.id LEFT JOIN category_markers cm on c.id = cm.category_id LEFT JOIN markers m on cm.marker_name = m.marker_name ";

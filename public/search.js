@@ -1,10 +1,10 @@
 Schizo= {
-    1: 'Paranoid schizophrenia',
-    2: 'Disorganized schizophrenia',
-    3: 'Catatonic schizophrenia',
-    4: 'Undifferentiated schizophrenia',
-    5: 'Residual schizophrenia'
-  };
+  1: 'Paranoid schizophrenia',
+  2: 'Disorganized schizophrenia',
+  3: 'Catatonic schizophrenia',
+  4: 'Undifferentiated schizophrenia',
+  5: 'Residual schizophrenia'
+};
 Approxi={
   1: '$0-$15,000',
   2: '$15,001-$25,000',
@@ -14,7 +14,7 @@ Approxi={
   6: '$75,001-$100,000',
   7: '$100,001-$150,000',
   8: 'Greater than $150,001'
-  }
+}
 Ethnic={
   1: 'Hispanic or Latino',
   2: 'Not Hispanic or Latino'
@@ -144,41 +144,13 @@ const getFilters = function(data){
    }
    return newArr;
 }
-costam = {
-  id: 'rate',
-  label: 'Slider',
-  type: 'integer',
-  validation: {
-    min: 0,
-    max: 100
-  },
-  plugin: 'slider',
-  plugin_config: {
-    min: 0,
-    max: 100,
-    value: 0
-  },
-  valueSetter: function(rule, value) {
-    if (rule.operator.nb_inputs == 1) value = [value];
-    rule.$el.find('.rule-value-container input').each(function(i) {
-      $(this).slider('setValue', value[i] || 0);
-    });
-  },
-  valueGetter: function(rule) {
-    var value = [];
-    rule.$el.find('.rule-value-container input').each(function() {
-      value.push($(this).slider('getValue'));
-    });
-    return rule.operator.nb_inputs == 1 ? value[0] : value;
-  }
-},
-
 $(document).ready(function(){
   myCheck = $("#check").clone(); 
   myAccord = $(".card").clone();
   myFrom = $("#from1").clone();
   myWhere = $("#where1").clone();
   nameOfColumns='';
+  $("#run").attr('disabled', true); 
   $(".temp").hide(); 
   columnListInAccordion(data);
   $("#accordion").hide();
@@ -203,33 +175,23 @@ $(document).ready(function(){
   $('#reset').on('click', function() {
     $('#builder').queryBuilder('reset');
   });
-  $('#change').on('click', function() {
-    var result = $('#builder').queryBuilder('getSQL', false);
-
+  $('#run').on('click', function(){
+    var result = $('#builder').queryBuilder('getSQL', 'question_mark');
     if (result.sql.length) {
-      alert();
+      arr=JSON.stringify(result.params, null, 2)
+      arr=JSON.parse(arr);
+      str = trueSQL(result.sql, arr, colTypeObj);
+      $("#btexcel").show();
+      queryStr='SELECT '+nameOfColumns+strJoin+' WHERE '+str+';';
+      createTable(queryStr);
     }
-  });
-      $('#run').on('click', function(){
-        var result = $('#builder').queryBuilder('getSQL', 'question_mark');
-        if (result.sql.length) {
-          arr=JSON.stringify(result.params, null, 2)
-          arr=JSON.parse(arr);
-          str = trueSQL(result.sql, arr, colTypeObj);
-          $("#btexcel").show();
-          queryStr='SELECT '+nameOfColumns+strJoin+' WHERE '+str+';';
-          createTable(queryStr);
-        }
-    });  
-    $("#excel").click(function(){
-      $("#showData").table2excel({
-        exclude:".noExl",
-        name:"Worksheet Name",
-        filename:"NewTable",
-        fileext:".xls" 
-      });
-    })
-    $("#guz").click(function(){
-      console.log(colTypeObj['individuals.gender']);
-    })
+  });  
+  $("#excel").click(function(){
+    $("#showData").table2excel({
+      exclude:".noExl",
+      name:"Worksheet Name",
+      filename:"NewTable",
+      fileext:".xls" 
+    });
+  })
 });

@@ -31,7 +31,7 @@ var data = {
     { years_of_school: 'real' }
   ],
   biological_measurements: [
-    { id: 'integer' },
+    { biological_measurements_id: 'integer' },
     { bmi: 'real' },
     { measurements_date: 'date' },
     { abdominal_girth_cm: 'real' },
@@ -233,10 +233,15 @@ var data = {
     { tourettes_syndrome: 'boolean' },
     { ulcerative_colitis: 'boolean' }
   ],
-  categories: [ { id: 'integer' }, { name: 'text' }, { description: 'text' } ],
-  category_individuals: [ { category_id: 'integer' } ],
+  categories: [
+    { category_id: 'integer' },
+    { category_name: 'text' },
+    { description: 'text' }
+  ],
+  category_individuals: [ { category_id: 'integer' }, { subject_id: 'integer' } ],
   blood_samples: [
-    { id: 'text' },
+    { blood_sample_id: 'text' },
+    { subject_id: 'integer' },
     { date_collected: 'date' },
     { absolute_neutrophil_count: 'real' },
     { activated_partial_thromboplastin_time: 'real' },
@@ -321,14 +326,14 @@ var data = {
   individuals: [
     { subject_id: 'integer' },
     { pedigree_number: 'integer' },
-    { name: 'text' },
+    { individual_name: 'text' },
     { gender: 'text' },
     { is_genotyped: 'boolean' },
     { father_id: 'integer' },
     { mother_id: 'integer' },
     { sex: 'character' }
   ],
-  projects: [ { id: 'integer' }, { name: 'text' } ],
+  projects: [ { project_id: 'integer' }, { project_name: 'text' } ],
   markers: [
     { chromosome_name: 'text' },
     { marker_name: 'text' },

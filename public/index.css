@@ -77,3 +77,12 @@ tr:nth-child(even) {
  .font {
   font-size: 14px;
 }
+
+.mojkolor{
+  color:  rgb(6, 71, 114);
+  background-color:rgb(238, 240, 231);
+}
+.alarm{
+  color:  rgb(145, 49, 5);
+  background-color:rgb(243, 238, 245);
+}

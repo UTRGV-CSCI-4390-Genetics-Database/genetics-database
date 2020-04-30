@@ -119,11 +119,11 @@ const getFilters = function(data){
           colTypeObj[key+'.'+key1]='date';
           nieWiem={id: key+'.'+key1, label: key1, type: 'date', optgroup: key,
           validation: {
-              format: 'MM/DD/YYYY'
+              format: "'YYYY/MM/DD'"
             },
             plugin: 'datepicker',
             plugin_config: {
-              format: 'mm/dd/yyyy',
+              format: "'yyyy/mm/dd'",
               todayBtn: 'linked',
               todayHighlight: true,
               autoclose: true
@@ -156,7 +156,9 @@ $(document).ready(function(){
   $("#accordion").hide();
   $("#bt1").click(function() {
     if(even) {doEven();} 
-    else {nameOfColumns=doOdd();}
+    else {nameOfColumns=doOdd();
+      console.log("to sa kolumny " +nameOfColumns)
+    }
     even = !even;
   });
    filterArr = getFilters(data);
@@ -173,7 +175,8 @@ $(document).ready(function(){
   });
   
   $('#reset').on('click', function() {
-    $('#builder').queryBuilder('reset');
+    location.reload();
+    //$('#builder').queryBuilder('reset');
   });
   $('#run').on('click', function(){
     var result = $('#builder').queryBuilder('getSQL', 'question_mark');

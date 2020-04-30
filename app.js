@@ -56,9 +56,9 @@ app.get('/update', function(req, res){
 app.get('/delete', function(req, res){
     res.sendFile(`${__dirname }/public/delete.html`);})
 app.post('/results', async function(req, res){
-    //console.log(req.body.obj.request);
+    console.log(req.body.obj.request);
     var table = await read(req.body.obj.request);
-    //console.log(table);
+    console.log(table);
     res.send(table);});
 app.post('/schema', async function(req, res){
     var obj = req.body.obj;
@@ -66,7 +66,7 @@ app.post('/schema', async function(req, res){
     for (let [key, value] of Object.entries(obj)){
        newArr = [];
        for(i=0; i <obj[key].length; i++ ){
-            if(!(key == "individuals") && obj[key][i]['column_name'] == "subject_id"){}
+            if(!(key == "individuals" || key == "blood_samples" || key == "category_individuals") && obj[key][i]['column_name'] == "subject_id"){}
             else{
                 minObj = {}
                 minObj[obj[key][i]['column_name']] = obj[key][i]['data_type'];

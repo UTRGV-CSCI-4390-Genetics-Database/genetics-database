@@ -1,6 +1,7 @@
 $(document).ready(function(){
     var Id = 0;
     $('.temp').hide();
+    $("#listElem").hide();
     $("#update").prop('disabled', true);
     $("#btnSub").click(function(){
       $("#btnSub").prop('disabled', true); $("#btnCat").prop('disabled', true); $("#btnPro").prop('disabled', true); 
@@ -64,6 +65,8 @@ $(document).ready(function(){
         obj=restricton(data, rest);
         deleteRecord(obj, col, Id)
       }); 
-
+      $('#reset').click(function(){
+        location.reload();
+      })
 });
   

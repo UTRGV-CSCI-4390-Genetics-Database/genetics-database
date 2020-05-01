@@ -41,6 +41,7 @@ async function read(text){
     }
     catch(e){
         console.error(`Problem - ${e}`);
+        return(e);
     }
 }
 app.get('/home', function(req, res){

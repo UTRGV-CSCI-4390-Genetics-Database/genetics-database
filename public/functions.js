@@ -423,12 +423,14 @@ const updateDB = function(obj, id){
 const updateResults = function(table, obj){
   var li=$("#listElem").clone();
   for(let[key, value] of Object.entries(obj)){
-    li.removeAttr("id", "listElem");
-    li.find("#li1").text(table);
-    li.find("#li2").text(key);
-    li.find(".badge-pill").text(value);
-    console.log(table +' '+ key +' '+value)
-    $("#lista").append(li.clone());
+    if(value!=null){
+      li.removeAttr("id", "listElem");
+      li.find("#li1").text(table);
+      li.find("#li2").text(key);
+      li.find(".badge-pill").text(value);
+      $("#lista").append(li.clone());
+    }
+
   }
 }
 
@@ -556,7 +558,7 @@ const insertToTable = function(obj){
         str4=str4.slice(0, str4.length-2);
         str2=str2+")";
         str4=str4+")";
-        str=str1+str2+str3+str4+";"
+        str=str1+str2+str3+str4+" RETURNING *;"
         req = {request: str};
         $.ajax({
           url: '/results',
@@ -564,24 +566,21 @@ const insertToTable = function(obj){
           contentType: 'application/json',
           data: JSON.stringify({obj: req}),
           success: function(res){
-          console.log(res);
-          }
+            console.log(res);
+            if(!isEmpty(res[0])){
+                $("#listElem").show(); 
+                $("#sukces").show(); 
+                updateResults(key, res[0])
+                $("#listElem").hide();
+            }
+           }
         });
       }
 }
-const proba = function(){
-  str= "INSERT INTO demographics (subject_id) VALUES (9847612);"
-  req = {request: str};
-  $.ajax({
-    url: '/results',
-    method: "POST",
-    contentType: 'application/json',
-    data: JSON.stringify({obj: req}),
-    success: function(res){
-      console.log('ok')
-    }
-  });
-}
+
+
+//function for delete
+
 const deleteRecord = function(obj, col, id){
   console.log('to jest delete')
   for (let [key, value] of Object.entries(obj)){
@@ -596,7 +595,16 @@ const deleteRecord = function(obj, col, id){
       contentType: 'application/json',
       data: JSON.stringify({obj: req}),
       success: function(res){
-      console.log(res);
+        if(isEmpty(res[0])){
+          $("#alert").text("There is no record with id = " + id);
+        }
+        else{
+            $("#alert").hide();
+            $("#listElem").show(); 
+            $("#sukces").show(); 
+            updateResults(key, res[0])
+            $("#listElem").hide();
+        }
       }
     });
   }

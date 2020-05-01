@@ -1,3 +1,32 @@
+//functions for search
+function moveObjectElement(currentKey, afterKey, obj) {
+  var result = {};
+  var val = obj[currentKey];
+  delete obj[currentKey];
+  var next = -1;
+  var i = 0;
+  if(typeof afterKey == 'undefined' || afterKey == null) afterKey = '';
+  $.each(obj, function(k, v) {
+      if((afterKey == '' && i == 0) || next == 1) {
+          result[currentKey] = val; 
+          next = 0;
+      }
+      if(k == afterKey) { next = 1; }
+      result[k] = v;
+      ++i;
+  });
+  if(next == 1) {
+      result[currentKey] = val; 
+  }
+  if(next !== -1) return result; else return obj;
+}
+function isEmpty(obj) {
+  for(var key in obj) {
+      if(obj.hasOwnProperty(key))
+          return false;
+  }
+  return true;
+}
 const dataToObj = function(data){
   var newObj = {};
   for (let [key, value] of Object.entries(data)){
@@ -162,9 +191,10 @@ const trueSQL= function(str, arr, obj){
   return newStr;
 };
 
-//strJoin = " FROM individuals JOIN demographics ON individuals.subject_id = demographics.subject_id JOIN medical_history ON individuals.subject_id = medical_history.subject_id JOIN psychiatric_disorders ON individuals.subject_id = psychiatric_disorders.subject_id LEFT JOIN biological_measurements bm ON individuals.subject_id = bm.subject_id LEFT JOIN blood_samples ON individuals.subject_id = blood_samples.subject_id LEFT JOIN project_enrollments pe ON individuals.subject_id = pe.individual_id LEFT JOIN projects p ON pe.project_id = p.project_id LEFT JOIN category_individuals ON individuals.subject_id = category_individuals.subject_id LEFT JOIN categories c on category_individuals.category_id = c.category_id LEFT JOIN category_markers cm on c.category_id = cm.category_id LEFT JOIN markers m on cm.marker_name = m.marker_name";
-
 strJoin = " FROM individuals JOIN demographics ON individuals.subject_id = demographics.subject_id JOIN medical_history ON individuals.subject_id = medical_history.subject_id JOIN psychiatric_disorders ON individuals.subject_id = psychiatric_disorders.subject_id LEFT JOIN biological_measurements ON individuals.subject_id = biological_measurements.subject_id LEFT JOIN blood_samples ON individuals.subject_id = blood_samples.subject_id LEFT JOIN project_enrollments ON individuals.subject_id = project_enrollments.individual_id LEFT JOIN projects ON project_enrollments.project_id = projects.project_id LEFT JOIN category_individuals ON individuals.subject_id = category_individuals.subject_id LEFT JOIN categories ON category_individuals.category_id = categories.category_id LEFT JOIN category_markers ON categories.category_id = category_markers.category_id LEFT JOIN markers ON category_markers.marker_name = markers.marker_name";
+
+
+//functions for update
 
 
 const Accordion = function(data){
@@ -172,8 +202,6 @@ const Accordion = function(data){
   myAccord = $("#card").clone(true);
   $("#accordion").empty();
   for (let [key, value] of Object.entries(data)){
-    //if(key=="categories"||key=="projects"||key=="category_markers"||key=="markers"){}
-    //else{
       myAccord.find("button").attr("data-target", "#"+key).text(key).attr("id", "#"+key); 
       myAccord.find(".collapse").attr("id", key);
       value.forEach(function(val){
@@ -205,14 +233,18 @@ const Accordion = function(data){
       $("#accordion").append(myAccord.clone(true));
       myAccord.find(".card-body").text("");
       count++;
-    //}
   }
 }
-const accordWihtRestriction = function(data, rest){
+const restricton = function(data, rest){
   newObj={};
   if(rest == 'sub'){
     newObj = data;
     delete newObj["categories"]; delete newObj["projects"]; delete newObj["category_markers"]; delete newObj["markers"];
+  }
+  else if(rest == 'sub2'){
+    newObj = data;
+    delete newObj["categories"]; delete newObj["projects"]; delete newObj["category_markers"]; delete newObj["markers"];
+    delete newObj["biological_measurements"]; delete newObj["blood_samples"];
   }
   else if(rest == 'pro'){
     newObj["project_enrollments"]=[ { project_id: 'integer' }, { individual_id: 'integer' } ];
@@ -230,7 +262,22 @@ const accordWihtRestriction = function(data, rest){
     delete newObj["psychiatric_disorders"]; delete newObj["medical_history"]; delete newObj["blood_samples"]; delete newObj["individuals"];
     delete newObj["categories"];  delete newObj["category_markers"]; delete newObj["category_individuals"];
   }
-  Accordion(newObj);
+  else if(rest == 'bio'){
+    newObj = data;
+    delete newObj["project_enrollments"]; delete newObj["projects"]; delete newObj["demographics"]; delete newObj["markers"];
+    delete newObj["psychiatric_disorders"]; delete newObj["medical_history"]; delete newObj["blood_samples"]; delete newObj["individuals"];
+    delete newObj["categories"];  delete newObj["category_markers"]; delete newObj["category_individuals"];
+  }
+  else if(rest == 'blo'){
+    newObj = data;
+    delete newObj["project_enrollments"]; delete newObj["projects"]; delete newObj["demographics"]; delete newObj["markers"];
+    delete newObj["psychiatric_disorders"]; delete newObj["medical_history"]; delete newObj["biological_measurements"]; delete newObj["individuals"];
+    delete newObj["categories"];  delete newObj["category_markers"]; delete newObj["category_individuals"];
+  }
+  return newObj
+}
+const accordWihtRestriction = function(data, rest){
+  Accordion(restricton(data, rest));
 }
 const checkSubjectId = function(str, str2, rest){
   req = {request: str};
@@ -382,5 +429,175 @@ const updateResults = function(table, obj){
     li.find(".badge-pill").text(value);
     console.log(table +' '+ key +' '+value)
     $("#lista").append(li.clone());
+  }
+}
+
+
+//functions for new record
+
+
+const checkSubjectId2 = function(str, str2, rest){
+  req = {request: str};
+  $.ajax({
+    url: '/results',
+    method: "POST",
+    contentType: 'application/json',
+    data: JSON.stringify({obj: req}),
+    success: function(res){
+      if(res.length == 0){
+        $('.temp').show();
+        $('#card').show();
+        accordWihtRestriction(data, rest);
+        $('.temp').hide();
+        $('#update').prop('disabled', false);
+        $('#card').hide();
+      }
+      else if(res.length > 0){
+        $("#btnSub").prop('disabled', false); $("#btnCat").prop('disabled', false); $("#btnPro").prop('disabled', false); 
+        $("#btnMar").prop('disabled', false); $("#btnBio").prop('disabled', false); $("#btnBlo").prop('disabled', false); 
+        $("#alert").text("The record with "+ str2 +" already exist. You should use different identifier");
+      }
+      else {
+        $("#alert").text("We apologize but there is some problem with connection to database. Try it later.");
+      }
+    }
+  });
+}
+
+const getInput = function(){
+  var newObj = {};
+  for (let [key, value] of Object.entries(dataInObj)){
+    var tempObj = {};
+      for(let[key1, value1] of Object.entries(value)){  
+        val = $('#'+key+'_'+key1).val();
+          tempObj[key1]=val;
+      }
+      newObj[key] = tempObj;
+  }
+  return newObj;
+}
+const appendId = function(obj, id, rest){
+  newObj={};
+  tempObj={}
+  if(rest=="sub2"){
+    obj["individuals"]["subject_id"]=id;
+    obj["demographics"]["subject_id"]=id;
+    obj["psychiatric_disorders"]["subject_id"]=id;
+    obj["medical_history"]["subject_id"]=id;
+    obj["category_individuals"]["subject_id"]=id;
+    obj["category_individuals"]["category_id"]=1;
+    obj["project_enrollments"]["individual_id"]=id;
+    obj["project_enrollments"]["project_id"]=1;
+  }
+  else if(rest=='pro'){
+    obj["projects"]["project_id"]=id;
+    obj["project_enrollments"]["project_id"]=id;
+    obj["project_enrollments"]["individual_id"]=80346888;
+  }
+  else if(rest=='cat'){
+    obj["categories"]["category_id"]=id;
+    obj["category_individuals"]["category_id"]=id;
+    obj["category_individuals"]["subject_id"]=80346888;
+    obj["category_markers"]["category_id"]=id;
+    obj["category_markers"]["marker_name"]="rs2534636";
+  }
+  else if(rest=='mar'){
+    obj["markers"]["marker_name"]=id;
+  }
+  else if(rest=='blo'){
+    obj["blood_samples"]["blood_sample_id"]=id;
+    obj["blood_samples"]["subject_id"]=80346888;
+  }
+  else if(rest=='bio'){
+    obj["biological_measurements"]["biological_measurements_id"]=id;
+    obj["biological_measurements"]["subject_id"]=80346888;
+  }
+  for (let [key, value] of Object.entries(obj)){
+    var tempObj = {};
+      for(let[key1, value1] of Object.entries(value)){  
+        if(value1){
+          if(!value1==""||!value1==" "){
+            tempObj[key1]=value1;
+          }
+        }
+      }
+    if(!isEmpty(tempObj)){
+      newObj[key] = tempObj;
+    }
+  }
+  console.log(newObj)
+  if(rest=="sub2"){
+    newObj = moveObjectElement('individuals', '', newObj);
+  }
+  else if(rest=="pro"){
+    newObj = moveObjectElement("projects", '', newObj);
+  }
+  console.log(newObj)
+  return newObj;
+}
+
+const insertToTable = function(obj){
+      for (let [key, value] of Object.entries(obj)){
+        str1 = "INSERT INTO "+key +" (";
+        str3 = " VALUES ("
+        str2 ="";
+        str4="";
+        for(let[key1, value1] of Object.entries(value)){ 
+          type=dataInObj[key][key1] 
+          str2= str2+key1+", " ; 
+          if(type=="text"||type=="date"||type=="character"){
+            str4=str4+`'${value1}'`+", ";
+          }
+          else{
+            str4=str4+value1+", ";
+          }
+        }
+        str2=str2.slice(0, str2.length-2);
+        str4=str4.slice(0, str4.length-2);
+        str2=str2+")";
+        str4=str4+")";
+        str=str1+str2+str3+str4+";"
+        req = {request: str};
+        $.ajax({
+          url: '/results',
+          method: "POST",
+          contentType: 'application/json',
+          data: JSON.stringify({obj: req}),
+          success: function(res){
+          console.log(res);
+          }
+        });
+      }
+}
+const proba = function(){
+  str= "INSERT INTO demographics (subject_id) VALUES (9847612);"
+  req = {request: str};
+  $.ajax({
+    url: '/results',
+    method: "POST",
+    contentType: 'application/json',
+    data: JSON.stringify({obj: req}),
+    success: function(res){
+      console.log('ok')
+    }
+  });
+}
+const deleteRecord = function(obj, col, id){
+  console.log('to jest delete')
+  for (let [key, value] of Object.entries(obj)){
+    if(key=="project_enrollments"){column = 'individual_id';}
+    else{column=col;}
+    str = "DELETE FROM "+key +" WHERE " +column+ " = "+id+" RETURNING *;";
+    console.log(str)
+    req = {request: str};
+    $.ajax({
+      url: '/results',
+      method: "POST",
+      contentType: 'application/json',
+      data: JSON.stringify({obj: req}),
+      success: function(res){
+      console.log(res);
+      }
+    });
   }
 }

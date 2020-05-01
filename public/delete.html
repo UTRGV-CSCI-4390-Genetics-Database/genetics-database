@@ -16,22 +16,61 @@
     <div class="navbar-nav">
       <a class="nav-item nav-link" href="/home">Home</a>
       <a class="nav-item nav-link" href="/search">Search</a>
-      <a class="nav-item nav-link active" href="/post">New Record</a>
+      <a class="nav-item nav-link " href="/post">New Record</a>
       <a class="nav-item nav-link" href="/update">Update</a>
-      <a class="nav-item nav-link" href="/delete">Delete</a>
+      <a class="nav-item nav-link active" href="/delete">Delete</a>
       <a class="nav-item nav-link" href="/about">About</a>
     </div>
   </div>
 </nav>
 <div class="h-divider1"></div>  <div class="h-divider4"></div>
- 
+<div class="input-group col-5">
+  <div class="input-group-prepend"><div class="mojkolor input-group-text" id="btnGroupAddon">Delete Subject Record</div></div>
+  <input id="valSub" type="number" class="form-control" placeholder="Input subject Id">
+  <button id="btnSub" type="button" class="btn btn-outline-success">Confirm</button>
+</div>
+<div class="h-divider"></div>
+<div class="input-group col-5">
+  <div class="input-group-prepend"><div class="mojkolor input-group-text" id="btnGroupAddon">Delete Project Record</div></div>
+  <input id="valPro" type="number" class="form-control" placeholder="Input projects Id">
+  <button id="btnPro" type="button" class="btn btn-outline-success">Confirm</button>
+</div>
+<div class="h-divider"></div>
+<div class="input-group col-5">
+  <div class="input-group-prepend"><div class="mojkolor input-group-text" id="btnGroupAddon">Delete Categorie Record</div></div>
+  <input id="valCat" type="number" class="form-control" placeholder="Input categories Id">
+  <button id="btnCat" type="button" class="btn btn-outline-success">Confirm</button>
+</div>
+<div class="h-divider"></div>
+<div class="input-group col-5">
+  <div class="input-group-prepend"><div class="mojkolor input-group-text" id="btnGroupAddon">Delete Marker Record</div></div>
+  <input id="valMar" type="text" class="form-control" placeholder="Input Marker Name">
+  <button id="btnMar" type="button" class="btn btn-outline-success">Confirm</button>
+</div>
+<div class="h-divider"></div>
+<div class="input-group col-5">
+  <div class="input-group-prepend"><div class="mojkolor input-group-text" id="btnGroupAddon">Delete Biological Measurement Record</div></div>
+  <input id="valBio" type="number" class="form-control" placeholder="Input Biological Measurement Id">
+  <button id="btnBio" type="button" class="btn btn-outline-success">Confirm</button>
+</div>
+<div class="h-divider"></div>
+<div class="input-group col-5">
+  <div class="input-group-prepend"><div class="mojkolor input-group-text" id="btnGroupAddon">Delete Blood Sample Record</div></div>
+  <input id="valBlo" type="text" class="form-control" placeholder="Input Blood Sample Id">
+  <button id="btnBlo" type="button" class="btn btn-outline-success">Confirm</button>
+</div>
+<div class="h-divider1"></div>  <div class="h-divider4"></div>
+<div class="btn-group">
+<button id = "reset" class="btn btn-warning btn-lg" type="button">Reset</button>
+</div> 
+<p id="alert" class="alarm"></p>
 <div class="h-divider1"></div>  <div class="h-divider4"></div>
 </div>  
-    <!-- Optional JavaScript -->
-    <script src="data.js"></script>
-    <script src="search.js"></script>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="data.js"></script>
+    <script src="functions.js"></script>
+    <script src="data.js"></script>
+    <script src="delete.js"></script>
 </body>
 </html>

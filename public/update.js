@@ -1,6 +1,5 @@
 //208072018, 200687016, 208213012
 $(document).ready(function(){
-  var li=$(".list-group-item").clone();
   var Id = 0;
   var myObj={};
   $('.temp').hide();

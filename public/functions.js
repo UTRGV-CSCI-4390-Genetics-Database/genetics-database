@@ -66,7 +66,7 @@ const columnListInAccordion = function (data) {
     value.forEach((val) => {
       for (const [key1, value1] of Object.entries(val)) {
         myCheck.find('input').attr('id', key1);
-        myCheck.find('label').text(` -${key1}`);
+        myCheck.find('label').html(`<span style="margin-left: 4px">${key1}<span/>`);
         myAccord.find('.card-body').append(myCheck.clone());
       }
     });

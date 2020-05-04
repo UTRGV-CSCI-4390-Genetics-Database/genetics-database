@@ -28,63 +28,28 @@
   </nav>
   <div class="h-divider1"></div>
   <div class="h-divider4"></div>
-  <p>
-    Input an ID into one of the boxes below and press confirm. Then at the bottom of the page, input the data you wish
-    to associate with this ID, and press the submit button when you're done.
-  </p>
-  <div class="input-group col-5">
-    <div class="input-group-prepend">
-      <div class="mojkolor input-group-text" id="btnGroupAddon">Add Subject</div>
-    </div>
-    <input id="valSub" type="number" class="form-control" placeholder="subject id">
-    <button id="btnSub" type="button" class="btn btn-outline-success">Confirm</button>
-  </div>
+  <h3>Add new:</h3>
   <div class="h-divider"></div>
-  <div class="input-group col-5">
-    <div class="input-group-prepend">
-      <div class="mojkolor input-group-text" id="btnGroupAddon">Add Project</div>
-    </div>
-    <input id="valPro" type="number" class="form-control" placeholder="project id">
-    <button id="btnPro" type="button" class="btn btn-outline-success">Confirm</button>
-  </div>
-  <div class="h-divider"></div>
-  <div class="input-group col-5">
-    <div class="input-group-prepend">
-      <div class="mojkolor input-group-text" id="btnGroupAddon">Add Category</div>
-    </div>
-    <input id="valCat" type="number" class="form-control" placeholder="category id">
-    <button id="btnCat" type="button" class="btn btn-outline-success">Confirm</button>
-  </div>
-  <div class="h-divider"></div>
-  <div class="input-group col-5">
-    <div class="input-group-prepend">
-      <div class="mojkolor input-group-text" id="btnGroupAddon">Add Marker</div>
-    </div>
-    <input id="valMar" type="text" class="form-control" placeholder="marker name">
-    <button id="btnMar" type="button" class="btn btn-outline-success">Confirm</button>
-  </div>
-  <div class="h-divider"></div>
-  <div class="input-group col-5">
-    <div class="input-group-prepend">
-      <div class="mojkolor input-group-text" id="btnGroupAddon">Add Biological Measurement</div>
-    </div>
-    <input id="valBio" type="number" class="form-control" placeholder="biological measurements id">
-    <button id="btnBio" type="button" class="btn btn-outline-success">Confirm</button>
-  </div>
-  <div class="h-divider"></div>
-  <div class="input-group col-5">
-    <div class="input-group-prepend">
-      <div class="mojkolor input-group-text" id="btnGroupAddon">Add Blood Sample</div>
-    </div>
-    <input id="valBlo" type="text" class="form-control" placeholder="blood sample id">
-    <button id="btnBlo" type="button" class="btn btn-outline-success">Confirm</button>
+  <div class="btn-group">
+    <button id="btnSub" type="button" class="btn btn-outline-secondary">Individual</button>
+    <button id="btnPro" type="button" class="btn btn-outline-secondary">Project</button>
+    <button id="btnCat" type="button" class="btn btn-outline-secondary">Categorie</button>
+    <button id="btnMar" type="button" class="btn btn-outline-secondary">Marker</button>
+    <button id="btnBio" type="button" class="btn btn-outline-secondary">Biological Measurement</button>
+    <button id="btnBlo" type="button" class="btn btn-outline-secondary">Blood Sample</button>
+    <button id="btnSubPro" type="button" class="btn btn-outline-secondary">Individual to Project</button>
+    <button id="btnSubCat" type="button" class="btn btn-outline-secondary">Individuals to Categorie</button>
+    <button id="btnMarCat" type="button" class="btn btn-outline-secondary">Marker to Categorie</button>
   </div>
   <div class="h-divider1"></div>
   <div class="h-divider4"></div>
   <div class="btn-group">
     <button id="reset" class="btn btn-warning btn-lg" type="button">Reset</button>
-    <button id="update" class="btn btn-success btn-lg" type="button">Submit</button>
+    <button id="update" class="btn btn-success btn-lg" type="button">Submit Changes</button>
   </div>
+  <div class="h-divider"></div>
+  <p id='war'>Fields marked with an asterisk are mandatory</p>
+  <div class="h-divider"></div>
   <div id="accordion" class="col-5">
     <div id="card" class="card">
       <div class="card-header" id="headingOne">
@@ -95,7 +60,7 @@
           </button>
         </h6>
       </div>
-      <div id="One" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+      <div id="One" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
         <div class="card-body"></div>
       </div>
     </div>
@@ -276,8 +241,7 @@
   </div>
   <ul id="lista" class="list-group"></ul>
 </div>
-<div class="h-divider1"></div>
-<div class="h-divider4"></div>
+
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"

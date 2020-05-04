@@ -66,7 +66,7 @@ const columnListInAccordion = function (data) {
     value.forEach((val) => {
       for (const [key1, value1] of Object.entries(val)) {
         myCheck.find('input').attr('id', key1);
-        myCheck.find('label').html(`<span style="margin-left: 4px">${key1}<span/>`);
+        myCheck.find('label').text(` -${key1}`);
         myAccord.find('.card-body').append(myCheck.clone());
       }
     });
@@ -178,6 +178,8 @@ const trueSQL = function (str, arr, obj) {
       str2 = `${str0}.${str1}`;
       if (obj[str2] == 'boolean') {
         if (arr[i] == 1) { myval = true; } else { myval = false; }
+      } else if (obj[str2] == 'string' || obj[str2] == 'character') {
+        myval = `'${arr[i]}'`;
       } else { myval = arr[i]; }
     } else { myval = arr[i]; }
     newStr = newStr + newArr[i] + myval;
@@ -402,76 +404,18 @@ const updateResults = function (table, obj) {
 // functions for new record
 
 
-const checkSubjectId2 = function (str, str2, rest) {
-  req = { request: str };
-  $.ajax({
-    url: '/results',
-    method: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify({ obj: req }),
-    success(res) {
-      if (res.length == 0) {
-        $('.temp').show();
-        $('#card').show();
-        accordWihtRestriction(data, rest);
-        $('.temp').hide();
-        $('#update').prop('disabled', false);
-        $('#card').hide();
-      } else if (res.length > 0) {
-        $('#btnSub').prop('disabled', false); $('#btnCat').prop('disabled', false); $('#btnPro').prop('disabled', false);
-        $('#btnMar').prop('disabled', false); $('#btnBio').prop('disabled', false); $('#btnBlo').prop('disabled', false);
-        $('#alert').text(`The record with ${str2} already exist. You should use different identifier`);
-      } else {
-        $('#alert').text('We apologize but there is some problem with connection to database. Try it later.');
-      }
-    },
-  });
-};
-
 const getInput = function () {
+  const Obj = {};
   const newObj = {};
   for (const [key, value] of Object.entries(dataInObj)) {
-    const tempObj = {};
+    var tempObj = {};
     for (const [key1, value1] of Object.entries(value)) {
       val = $(`#${key}_${key1}`).val();
       tempObj[key1] = val;
     }
-    newObj[key] = tempObj;
+    Obj[key] = tempObj;
   }
-  return newObj;
-};
-const appendId = function (obj, id, rest) {
-  newObj = {};
-  tempObj = {};
-  if (rest == 'sub2') {
-    obj.individuals.subject_id = id;
-    obj.demographics.subject_id = id;
-    obj.psychiatric_disorders.subject_id = id;
-    obj.medical_history.subject_id = id;
-    obj.category_individuals.subject_id = id;
-    obj.category_individuals.category_id = 1;
-    obj.project_enrollments.individual_id = id;
-    obj.project_enrollments.project_id = 1;
-  } else if (rest == 'pro') {
-    obj.projects.project_id = id;
-    obj.project_enrollments.project_id = id;
-    obj.project_enrollments.individual_id = 80346888;
-  } else if (rest == 'cat') {
-    obj.categories.category_id = id;
-    obj.category_individuals.category_id = id;
-    obj.category_individuals.subject_id = 80346888;
-    obj.category_markers.category_id = id;
-    obj.category_markers.marker_name = 'rs2534636';
-  } else if (rest == 'mar') {
-    obj.markers.marker_name = id;
-  } else if (rest == 'blo') {
-    obj.blood_samples.blood_sample_id = id;
-    obj.blood_samples.subject_id = 80346888;
-  } else if (rest == 'bio') {
-    obj.biological_measurements.biological_measurements_id = id;
-    obj.biological_measurements.subject_id = 80346888;
-  }
-  for (const [key, value] of Object.entries(obj)) {
+  for (const [key, value] of Object.entries(Obj)) {
     var tempObj = {};
     for (const [key1, value1] of Object.entries(value)) {
       if (value1) {
@@ -484,13 +428,6 @@ const appendId = function (obj, id, rest) {
       newObj[key] = tempObj;
     }
   }
-  console.log(newObj);
-  if (rest == 'sub2') {
-    newObj = moveObjectElement('individuals', '', newObj);
-  } else if (rest == 'pro') {
-    newObj = moveObjectElement('projects', '', newObj);
-  }
-  console.log(newObj);
   return newObj;
 };
 
@@ -561,4 +498,168 @@ const deleteRecord = function (obj, col, id) {
       },
     });
   }
+};
+
+
+const AccordionForPost = function (data) {
+  let count = 0;
+  myAccord = $('#card').clone(true);
+  $('#accordion').empty();
+  for (const [key, value] of Object.entries(data)) {
+    myAccord.find('button').attr('data-target', `#${key}`).text(key).attr('id', `#${key}`);
+    myAccord.find('.collapse').attr('id', key);
+    value.forEach((val) => {
+      for (const [key1, value1] of Object.entries(val)) {
+        if (key == 'biological_measurements' && key1 == 'biological_measurements_id') {} else if ((key == 'demographics' || key == 'psychiatric_disorders' || key == 'medical_history' || key == 'individuals') && key1 == 'subject_id') {} else if (key == 'projects' && key1 == 'project_id') {} else if (key == 'categories' && key1 == 'category_id') {}
+        // else if(key=="blood_samples" && key1=="blood_sample_id"){}
+        else {
+          if (value1 == 'boolean' || value1 == 'text' || value1 == 'character') {
+            myVar = $('#textDiv').clone(true); myVar.find('input').attr('id', `${key}_${key1}`);
+          } else if (value1 == 'integer' || value1 == 'smallint' || value1 == 'bigint') {
+            if (key1 == 'ethnicity' || key1 == 'father_ethnicity_1' || key1 == 'father_ethnicity_2' || key1 == 'father_ethnicity_3' || key1 == 'father_ethnicity_4' || key1 == 'mother_ethnicity_1' || key1 == 'mother_ethnicity_2' || key1 == 'mother_ethnicity_3' || key1 == 'mother_ethnicity_4') { myVar = $('#ethnicDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'ethnic_category') { myVar = $('#ethCaDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'approximate_income') { myVar = $('#incomeDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'reported_race') { myVar = $('#raceDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'marital_status') { myVar = $('#marDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'military_discharge') { myVar = $('#mildDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'military_rejected') { myVar = $('#milrDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'religion') { myVar = $('#relDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'smoked_cigarettes') { myVar = $('#cigDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'schizophrenia') { myVar = $('#schDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else { myVar = $('#intDiv').clone(true); myVar.find('input').attr('id', `${key}_${key1}`); }
+          } else if (value1 == 'date') { myVar = $('#dateDiv').clone(true); myVar.find('input').attr('id', `${key}_${key1}`); } else if (value1 == 'real') { myVar = $('#realDiv').clone(true); myVar.find('input').attr('id', `${key}_${key1}`); }
+          myVar.removeClass('temp');
+          if (key1 == 'sex' || key1 == 'subject_id' || key1 == 'project_id' || key1 == 'individual_id' || key1 == 'measurements_date'
+              || key1 == 'category_name' || key1 == 'blood_sample_id' || key1 == 'date_of_birth' || key1 == 'project_name' || key1 == 'marker_name'
+              || key1 == 'date_collected' || key1 == 'category_id' || key1 == 'blood_sample_id') {
+            myVar.find('label').html(`<span>${key1}</span><span class="red">*</span> `);
+          } else {
+            myVar.find('label').text(key1);
+          }
+          myAccord.find('.card-body').append(myVar.clone(true));
+        }
+      }
+    });
+    myAccord.removeAttr('id');
+    $('#accordion').append(myAccord.clone(true));
+    myAccord.find('.card-body').text('');
+    count++;
+  }
+};
+
+const restrictonForPost = function (data, rest) {
+  if (rest == 'sub') {
+    newObj = data;
+    delete newObj.categories; delete newObj.projects; delete newObj.category_markers; delete newObj.markers;
+    delete newObj.biological_measurements; delete newObj.blood_samples; delete newObj.project_enrollments; delete newObj.category_individuals;
+  } else if (rest == 'pro') {
+    newObj = data;
+    delete newObj.project_enrollments; /* delete newObj["projects"]; */ delete newObj.demographics; delete newObj.biological_measurements;
+    delete newObj.psychiatric_disorders; delete newObj.medical_history; delete newObj.blood_samples; delete newObj.individuals;
+    delete newObj.markers; delete newObj.categories; delete newObj.category_markers; delete newObj.category_individuals;
+  } else if (rest == 'cat') {
+    newObj = data;
+    delete newObj.project_enrollments; delete newObj.projects; delete newObj.demographics; delete newObj.biological_measurements;
+    delete newObj.psychiatric_disorders; delete newObj.medical_history; delete newObj.blood_samples; delete newObj.individuals;
+    delete newObj.markers; /* delete newObj["categories"]; */ delete newObj.category_markers; delete newObj.category_individuals;
+  } else if (rest == 'mar') {
+    newObj = data;
+    delete newObj.project_enrollments; delete newObj.projects; delete newObj.demographics; delete newObj.biological_measurements;
+    delete newObj.psychiatric_disorders; delete newObj.medical_history; delete newObj.blood_samples; delete newObj.individuals;
+    delete newObj.categories; delete newObj.category_markers; delete newObj.category_individuals;
+  } else if (rest == 'bio') {
+    newObj = data;
+    delete newObj.project_enrollments; delete newObj.projects; delete newObj.demographics; delete newObj.markers;
+    delete newObj.psychiatric_disorders; delete newObj.medical_history; delete newObj.blood_samples; delete newObj.individuals;
+    delete newObj.categories; delete newObj.category_markers; delete newObj.category_individuals;
+  } else if (rest == 'blo') {
+    newObj = data;
+    delete newObj.project_enrollments; delete newObj.projects; delete newObj.demographics; delete newObj.markers;
+    delete newObj.psychiatric_disorders; delete newObj.medical_history; delete newObj.biological_measurements; delete newObj.individuals;
+    delete newObj.categories; delete newObj.category_markers; delete newObj.category_individuals;
+  } else if (rest == 'subcat') {
+    newObj = data;
+    delete newObj.project_enrollments; delete newObj.projects; delete newObj.demographics; delete newObj.biological_measurements;
+    delete newObj.psychiatric_disorders; delete newObj.medical_history; delete newObj.blood_samples; delete newObj.individuals;
+    delete newObj.markers; delete newObj.categories; delete newObj.category_markers; /* delete newObj["category_individuals"]; */
+  } else if (rest == 'subpro') {
+    newObj = data;
+    /* delete newObj["project_enrollments"]; */ delete newObj.projects; delete newObj.demographics; delete newObj.biological_measurements;
+    delete newObj.psychiatric_disorders; delete newObj.medical_history; delete newObj.blood_samples; delete newObj.individuals;
+    delete newObj.markers; delete newObj.categories; delete newObj.category_markers; delete newObj.category_individuals;
+  } else if (rest == 'marcat') {
+    newObj = data;
+    delete newObj.project_enrollments; delete newObj.projects; delete newObj.demographics; delete newObj.biological_measurements;
+    delete newObj.psychiatric_disorders; delete newObj.medical_history; delete newObj.blood_samples; delete newObj.individuals;
+    delete newObj.markers; delete newObj.categories; /* delete newObj["category_markers"]; */ delete newObj.category_individuals;
+  }
+
+  AccordionForPost(newObj);
+};
+
+const insertToTableSub = function (obj) {
+  str1 = 'INSERT INTO individuals (';
+  str3 = ' VALUES (';
+  str2 = '';
+  str4 = '';
+  for (const [key1, value1] of Object.entries(obj.individuals)) {
+    type = dataInObj.individuals[key1];
+    str2 = `${str2 + key1}, `;
+    if (type == 'text' || type == 'date' || type == 'character') {
+      str4 = `${str4}'${value1}'` + ', ';
+    } else {
+      str4 = `${str4 + value1}, `;
+    }
+  }
+  str2 = str2.slice(0, str2.length - 2);
+  str4 = str4.slice(0, str4.length - 2);
+  str2 += ')';
+  str4 += ')';
+  str = `${str1 + str2 + str3 + str4} RETURNING *;`;
+  req = { request: str };
+  $.ajax({
+    url: '/results',
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({ obj: req }),
+    success(res) {
+      if (!isEmpty(res[0])) {
+        newId = res[0].subject_id;
+        /* $("#listElem").show();
+          $("#sukces").show();
+          updateResults(key, res[0])
+          $("#listElem").hide(); */
+      }
+      for (const [key, value] of Object.entries(obj)) {
+        if (key == 'individuals') {} else {
+          console.log('to poczatek loop');
+          str1 = `INSERT INTO  ${key} (subject_id, `;
+          str3 = ` VALUES (${newId}, `;
+          str2 = '';
+          str4 = '';
+          for (const [key1, value1] of Object.entries(value)) {
+            type = dataInObj[key][key1];
+            str2 = `${str2 + key1}, `;
+            if (type == 'text' || type == 'date' || type == 'character') {
+              str4 = `${str4}'${value1}'` + ', ';
+            } else {
+              str4 = `${str4 + value1}, `;
+            }
+          }
+          str2 = str2.slice(0, str2.length - 2);
+          str4 = str4.slice(0, str4.length - 2);
+          str2 += ')';
+          str4 += ')';
+          str = `${str1 + str2 + str3 + str4} RETURNING *;`;
+          req = { request: str };
+          console.log(req);
+          $.ajax({
+            url: '/results',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ obj: req }),
+            success(res) {
+              console.log(res);
+              if (!isEmpty(res[0])) {
+                $('#listElem').show();
+                $('#sukces').show();
+                updateResults(key, res[0]);
+                $('#listElem').hide();
+              }
+            },
+          });
+        }
+      }
+    },
+  });
 };

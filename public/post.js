@@ -1,74 +1,90 @@
+const prepa = function () {
+  $('.temp').show();
+  $('#card').show();
+  $('#war').show();
+  $('#btnSub').prop('disabled', true); $('#btnPro').prop('disabled', true); $('#btnCat').prop('disabled', true);
+  $('#btnMar').prop('disabled', true); $('#btnBio').prop('disabled', true); $('#btnBlo').prop('disabled', true);
+  $('#btnSubPro').prop('disabled', true); $('#btnSubCat').prop('disabled', true); $('#btnMarCat').prop('disabled', true);
+};
 $(document).ready(() => {
-  let Id = 0;
-  const myObj = {};
+  let rest = '';
   $('.temp').hide();
   $('#card').hide();
   $('#listElem').hide();
   $('#update').prop('disabled', true);
+  $('#war').hide();
   $('#btnSub').click(() => {
-    $('#btnSub').prop('disabled', true); $('#btnCat').prop('disabled', true); $('#btnPro').prop('disabled', true);
-    $('#btnMar').prop('disabled', true); $('#btnBlo').prop('disabled', true); $('#btnBio').prop('disabled', true);
-    $('#alert').empty();
-    Id = $('#valSub').val();
-    str2 = `subject_id = ${Id}`;
-    str = `SELECT subject_id FROM individuals WHERE ${str2};`;
-    rest = 'sub2';
-    checkSubjectId2(str, str2, rest);
+    prepa();
+    restrictonForPost(data, 'sub');
+    $('.temp').hide();
+    $('#update').prop('disabled', false);
+    $('#card').hide();
+    rest = 'sub';
   });
   $('#btnPro').click(() => {
-    $('#btnSub').prop('disabled', true); $('#btnCat').prop('disabled', true); $('#btnPro').prop('disabled', true);
-    $('#btnMar').prop('disabled', true); $('#btnBlo').prop('disabled', true); $('#btnBio').prop('disabled', true);
-    $('#alert').empty();
-    Id = $('#valPro').val();
-    str2 = `project_id = ${Id}`;
-    str = `SELECT project_id FROM projects WHERE ${str2};`;
-    rest = 'pro';
-    checkSubjectId2(str, str2, rest);
+    prepa();
+    restrictonForPost(data, 'pro');
+    $('.temp').hide();
+    $('#update').prop('disabled', false);
+    $('#card').hide();
   });
   $('#btnCat').click(() => {
-    $('#btnSub').prop('disabled', true); $('#btnCat').prop('disabled', true); $('#btnPro').prop('disabled', true);
-    $('#btnMar').prop('disabled', true); $('#btnBlo').prop('disabled', true); $('#btnBio').prop('disabled', true);
-    $('#alert').empty();
-    Id = $('#valCat').val();
-    str2 = `category_id = ${Id}`;
-    str = `SELECT category_id FROM categories WHERE ${str2};`;
-    rest = 'cat';
-    checkSubjectId2(str, str2, rest);
+    prepa();
+    restrictonForPost(data, 'cat');
+    $('.temp').hide();
+    $('#update').prop('disabled', false);
+    $('#card').hide();
   });
   $('#btnMar').click(() => {
-    $('#btnSub').prop('disabled', true); $('#btnCat').prop('disabled', true); $('#btnPro').prop('disabled', true);
-    $('#btnMar').prop('disabled', true); $('#btnBlo').prop('disabled', true); $('#btnBio').prop('disabled', true);
-    $('#alert').empty();
-    Id = $('#valMar').val();
-    str2 = `marker_name = '${Id}'`;
-    str = `SELECT marker_name FROM markers WHERE ${str2};`;
-    rest = 'mar';
-    checkSubjectId2(str, str2, rest);
+    prepa();
+    restrictonForPost(data, 'mar');
+    $('.temp').hide();
+    $('#update').prop('disabled', false);
+    $('#card').hide();
   });
   $('#btnBio').click(() => {
-    $('#btnSub').prop('disabled', true); $('#btnCat').prop('disabled', true); $('#btnPro').prop('disabled', true);
-    $('#btnMar').prop('disabled', true); $('#btnBlo').prop('disabled', true); $('#btnBio').prop('disabled', true);
-    $('#alert').empty();
-    Id = $('#valBio').val();
-    str2 = `biological_measurements_id = ${Id}`;
-    str = `SELECT biological_measurements_id FROM biological_measurements WHERE ${str2};`;
-    rest = 'bio';
-    checkSubjectId2(str, str2, rest);
+    prepa();
+    restrictonForPost(data, 'bio');
+    $('.temp').hide();
+    $('#update').prop('disabled', false);
+    $('#card').hide();
   });
   $('#btnBlo').click(() => {
-    $('#btnSub').prop('disabled', true); $('#btnCat').prop('disabled', true); $('#btnPro').prop('disabled', true);
-    $('#btnMar').prop('disabled', true); $('#btnBlo').prop('disabled', true); $('#btnBio').prop('disabled', true);
-    $('#alert').empty();
-    Id = $('#valBlo').val();
-    str2 = `blood_sample_id = '${Id}'`;
-    str = `SELECT blood_sample_id FROM blood_samples WHERE ${str2};`;
-    rest = 'blo';
-    checkSubjectId2(str, str2, rest);
+    prepa();
+    restrictonForPost(data, 'blo');
+    $('.temp').hide();
+    $('#update').prop('disabled', false);
+    $('#card').hide();
+  });
+  $('#btnSubPro').click(() => {
+    prepa();
+    restrictonForPost(data, 'subpro');
+    $('.temp').hide();
+    $('#update').prop('disabled', false);
+    $('#card').hide();
+  });
+  $('#btnSubCat').click(() => {
+    prepa();
+    restrictonForPost(data, 'subcat');
+    $('.temp').hide();
+    $('#update').prop('disabled', false);
+    $('#card').hide();
+  });
+  $('#btnMarCat').click(() => {
+    prepa();
+    restrictonForPost(data, 'marcat');
+    $('.temp').hide();
+    $('#update').prop('disabled', false);
+    $('#card').hide();
   });
   $('#update').click(() => {
     obj = getInput();
-    obj = appendId(obj, Id, rest);
-    insertToTable(obj);
+    console.log(obj);
+    if (rest == 'sub') {
+      insertToTableSub(obj);
+    } else {
+      insertToTable(obj);
+    }
   });
   $('#reset').click(() => {
     location.reload();

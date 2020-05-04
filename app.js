@@ -35,6 +35,29 @@ async function executeQuery(client, query) {
   return results.rows;
 }
 
+async function getTableSchema(table) {
+  const arr = [];
+  for (let i = 0; i < table.length; i += 1) {
+    const columnInfo = await read(`SELECT column_name, data_type FROM information_schema.columns WHERE TABLE_NAME = '${table[i].tablename}';`);
+    arr.push(columnInfo);
+  }
+  return arr;
+}
+
+async function arrSchema(tableN, tableC) {
+  const newObj = {};
+  for (let i = 0; i < tableN.length; i += 1) {
+    const arr = [];
+    for (let j = 0; j < tableC[i].length; j += 1) {
+      const obj = {};
+      obj[tableC[i][j].column_name] = tableC[i][j].data_type;
+      arr.push(obj);
+    }
+    newObj[tableN[i].tablename] = arr;
+  }
+  return newObj;
+}
+
 const app = express();
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
@@ -74,23 +97,13 @@ app.post('/results', async (req, res) => {
 });
 
 app.post('/schema', async (req, res) => {
-  const { obj } = req.body;
-  const newSchema = {};
-  for (const [key, value] of Object.entries(obj)) {
-    const newArr = [];
-    for (let i = 0; i < value.length; i += 1) {
-      if (key === 'individuals' || key === 'blood_samples' || key === 'category_individuals' || value[i].column_name !== 'subject_id') {
-        const minObj = {
-          [value[i].column_name]: value[i].data_type,
-        };
-        newArr.push(minObj);
-      }
-    }
-    newSchema[key] = newArr;
-  }
-  await saveSchema(newSchema);
-  res.send('Schema successfully updated');
+  const table = await read(req.body.obj.request);
+  const sch = await getTableSchema(table);
+  const arr = await arrSchema(table, sch);
+  await saveFile(arr);
+  res.send(arr);
 });
+
 
 (async () => {
   client = await connectToDatabase();

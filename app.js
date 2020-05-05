@@ -35,10 +35,10 @@ async function executeQuery(client, query) {
   return results.rows;
 }
 
-async function getTableSchema(table) {
+async function getTableSchema(client, table) {
   const arr = [];
   for (let i = 0; i < table.length; i += 1) {
-    const columnInfo = await read(`SELECT column_name, data_type FROM information_schema.columns WHERE TABLE_NAME = '${table[i].tablename}';`);
+    const columnInfo = await executeQuery(client, `SELECT column_name, data_type FROM information_schema.columns WHERE TABLE_NAME = '${table[i].tablename}';`);
     arr.push(columnInfo);
   }
   return arr;
@@ -97,10 +97,10 @@ app.post('/results', async (req, res) => {
 });
 
 app.post('/schema', async (req, res) => {
-  const table = await read(req.body.obj.request);
-  const sch = await getTableSchema(table);
+  const table = await executeQuery(client, req.body.obj.request);
+  const sch = await getTableSchema(client, table);
   const arr = await arrSchema(table, sch);
-  await saveFile(arr);
+  await saveSchema(arr);
   res.send(arr);
 });
 

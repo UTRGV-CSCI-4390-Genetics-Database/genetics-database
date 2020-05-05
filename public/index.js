@@ -1,7 +1,6 @@
 $(document).ready(() => {
   $('#schema').hide();
   $('#run').click(() => {
-    console.log(req);
     $.ajax({
       url: '/schema',
       method: 'POST',

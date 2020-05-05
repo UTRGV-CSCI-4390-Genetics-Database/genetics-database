@@ -58,6 +58,14 @@ async function arrSchema(tableN, tableC) {
   return newObj;
 }
 
+async function refreshSchema(client) {
+  const table = await executeQuery(client, "SELECT * FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema';");
+  const sch = await getTableSchema(client, table);
+  const arr = await arrSchema(table, sch);
+  await saveSchema(arr);
+  return arr;
+}
+
 const app = express();
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
@@ -97,16 +105,15 @@ app.post('/results', async (req, res) => {
 });
 
 app.post('/schema', async (req, res) => {
-  const table = await executeQuery(client, req.body.obj.request);
-  const sch = await getTableSchema(client, table);
-  const arr = await arrSchema(table, sch);
-  await saveSchema(arr);
+  const arr = await refreshSchema(client);
   res.send(arr);
 });
 
 
 (async () => {
   client = await connectToDatabase();
+  await refreshSchema(client);
+
   app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
   });

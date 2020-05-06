@@ -274,9 +274,9 @@ const checkSubjectId = function (str, str2, rest) {
         $('#card').hide();
       } else if (res.length == 0) {
         $('#btnSub').prop('disabled', false); $('#btnCat').prop('disabled', false); $('#btnPro').prop('disabled', false); $('#btnMar').prop('disabled', false);
-        $('#alert').text(`There is no results for ${str2}`);
+        $('#alert').text(`There are no results for ${str2}`);
       } else {
-        $('#alert').text('We apologize but there is some problem with connection to database. Try it later.');
+        $('#alert').text('We\'re experiencing a problem connecting to the database; please try again later.');
       }
     },
   });
@@ -312,7 +312,7 @@ const getSubjectData = function (table, str, obj) {
           }
         }
       } else {
-        alert(`There is no results in ${table} for this id if you want to add it you should use 'New Record' tab.`);
+        alert(`There are no results in ${table} for this id. Use the 'New Record' page if you wish to add this id.`);
       }
     },
   });

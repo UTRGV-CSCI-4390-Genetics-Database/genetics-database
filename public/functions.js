@@ -102,7 +102,7 @@ const getColumnArray = function (arr, obj) {
   }
 };
 
-const even = true;
+let even = true;
 const doEven = function () {
   $('#accordion').show();
   $('#bt1').text('Confirm selection');

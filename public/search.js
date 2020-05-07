@@ -177,7 +177,7 @@ $(document).ready(() => {
   });
 
   $('#builder').queryBuilder({
-    plugins: ['bt-tooltip-errors', 'chosen-selectpicker'],
+    plugins: ['chosen-selectpicker'],
 
     filters: filterArr,
   });

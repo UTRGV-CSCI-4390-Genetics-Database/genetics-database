@@ -8,7 +8,7 @@ $(document).ready(() => {
     $('#btnMar').prop('disabled', true); $('#btnBlo').prop('disabled', true); $('#btnBio').prop('disabled', true);
     $('#alert').empty();
     Id = $('#valSub').val();
-    rest = 'sub2';
+    rest = 'sub';
     col = 'subject_id';
     obj = restricton(data, rest);
     deleteRecord(obj, col, Id);

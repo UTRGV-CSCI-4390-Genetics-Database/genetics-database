@@ -22,7 +22,7 @@ function moveObjectElement(currentKey, afterKey, obj) {
 }
 function isEmpty(obj) {
   for (const key in obj) {
-    if (obj.hasOwnProperty(key)) return false;
+    if (obj.hasOwnProperty(key)) { return false; }
   }
   return true;
 }
@@ -160,7 +160,11 @@ const createTable = function (str) {
     contentType: 'application/json',
     data: JSON.stringify({ obj: req }),
     success(myTable) {
-      CreateTableFromJSON(myTable);
+      if (isEmpty(myTable[0])) {
+        $('#alert').text('No results found for this search.');
+      } else {
+        CreateTableFromJSON(myTable);
+      }
     },
   });
 };
@@ -203,14 +207,16 @@ const Accordion = function (data) {
     myAccord.find('.collapse').attr('id', key);
     value.forEach((val) => {
       for (const [key1, value1] of Object.entries(val)) {
-        if (value1 == 'boolean' || value1 == 'text' || value1 == 'character') {
-          myVar = $('#textDiv').clone(true); myVar.find('input').attr('id', `${key}_${key1}`);
-        } else if (value1 == 'integer' || value1 == 'smallint' || value1 == 'bigint') {
-          if (key1 == 'ethnicity' || key1 == 'father_ethnicity_1' || key1 == 'father_ethnicity_2' || key1 == 'father_ethnicity_3' || key1 == 'father_ethnicity_4' || key1 == 'mother_ethnicity_1' || key1 == 'mother_ethnicity_2' || key1 == 'mother_ethnicity_3' || key1 == 'mother_ethnicity_4') { myVar = $('#ethnicDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'ethnic_category') { myVar = $('#ethCaDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'approximate_income') { myVar = $('#incomeDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'reported_race') { myVar = $('#raceDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'marital_status') { myVar = $('#marDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'military_discharge') { myVar = $('#mildDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'military_rejected') { myVar = $('#milrDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'religion') { myVar = $('#relDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'smoked_cigarettes') { myVar = $('#cigDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'schizophrenia') { myVar = $('#schDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else { myVar = $('#intDiv').clone(true); myVar.find('input').attr('id', `${key}_${key1}`); }
-        } else if (value1 == 'date') { myVar = $('#dateDiv').clone(true); myVar.find('input').attr('id', `${key}_${key1}`); } else if (value1 == 'real') { myVar = $('#realDiv').clone(true); myVar.find('input').attr('id', `${key}_${key1}`); }
-        myVar.removeClass('temp');
-        myVar.find('label').text(key1);
-        myAccord.find('.card-body').append(myVar.clone(true));
+        if (key == 'biological_measurements' && key1 == 'biological_measurements_id') {} else if ((key == 'demographics' || key == 'psychiatric_disorders' || key == 'medical_history' || key == 'individuals') && key1 == 'subject_id') {} else if (key == 'projects' && key1 == 'project_id') {} else if (key == 'categories' && key1 == 'category_id') {} else if (key == 'blood_samples' && key1 == 'blood_sample_id') {} else {
+          if (value1 == 'boolean' || value1 == 'text' || value1 == 'character') {
+            myVar = $('#textDiv').clone(true); myVar.find('input').attr('id', `${key}_${key1}`);
+          } else if (value1 == 'integer' || value1 == 'smallint' || value1 == 'bigint') {
+            if (key1 == 'ethnicity' || key1 == 'father_ethnicity_1' || key1 == 'father_ethnicity_2' || key1 == 'father_ethnicity_3' || key1 == 'father_ethnicity_4' || key1 == 'mother_ethnicity_1' || key1 == 'mother_ethnicity_2' || key1 == 'mother_ethnicity_3' || key1 == 'mother_ethnicity_4') { myVar = $('#ethnicDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'ethnic_category') { myVar = $('#ethCaDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'approximate_income') { myVar = $('#incomeDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'reported_race') { myVar = $('#raceDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'marital_status') { myVar = $('#marDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'military_discharge') { myVar = $('#mildDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'military_rejected') { myVar = $('#milrDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'religion') { myVar = $('#relDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'smoked_cigarettes') { myVar = $('#cigDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else if (key1 == 'schizophrenia') { myVar = $('#schDiv').clone(true); myVar.find('select').attr('id', `${key}_${key1}`); } else { myVar = $('#intDiv').clone(true); myVar.find('input').attr('id', `${key}_${key1}`); }
+          } else if (value1 == 'date') { myVar = $('#dateDiv').clone(true); myVar.find('input').attr('id', `${key}_${key1}`); } else if (value1 == 'real') { myVar = $('#realDiv').clone(true); myVar.find('input').attr('id', `${key}_${key1}`); }
+          myVar.removeClass('temp');
+          myVar.find('label').text(key1);
+          myAccord.find('.card-body').append(myVar.clone(true));
+        }
       }
     });
     myAccord.removeAttr('id');
@@ -222,35 +228,18 @@ const Accordion = function (data) {
 const restricton = function (data, rest) {
   newObj = {};
   if (rest == 'sub') {
-    newObj = data;
-    delete newObj.categories; delete newObj.projects; delete newObj.category_markers; delete newObj.markers;
-  } else if (rest == 'sub2') {
-    newObj = data;
-    delete newObj.categories; delete newObj.projects; delete newObj.category_markers; delete newObj.markers;
-    delete newObj.biological_measurements; delete newObj.blood_samples;
+    newObj.demographics = data.demographics; newObj.psychiatric_disorders = data.psychiatric_disorders;
+    newObj.medical_history = data.medical_history; newObj.individuals = data.individuals;
   } else if (rest == 'pro') {
-    newObj.project_enrollments = [{ project_id: 'integer' }, { individual_id: 'integer' }];
-    newObj.projects = [{ project_id: 'integer' }, { project_name: 'text' }];
+    newObj.projects = data.projects;
   } else if (rest == 'cat') {
-    newObj = data;
-    delete newObj.project_enrollments; delete newObj.projects; delete newObj.demographics; delete newObj.biological_measurements;
-    delete newObj.psychiatric_disorders; delete newObj.medical_history; delete newObj.blood_samples; delete newObj.individuals;
-    delete newObj.markers;
+    newObj.categories = data.categories;
   } else if (rest == 'mar') {
-    newObj = data;
-    delete newObj.project_enrollments; delete newObj.projects; delete newObj.demographics; delete newObj.biological_measurements;
-    delete newObj.psychiatric_disorders; delete newObj.medical_history; delete newObj.blood_samples; delete newObj.individuals;
-    delete newObj.categories; delete newObj.category_markers; delete newObj.category_individuals;
+    newObj.markers = data.markers;
   } else if (rest == 'bio') {
-    newObj = data;
-    delete newObj.project_enrollments; delete newObj.projects; delete newObj.demographics; delete newObj.markers;
-    delete newObj.psychiatric_disorders; delete newObj.medical_history; delete newObj.blood_samples; delete newObj.individuals;
-    delete newObj.categories; delete newObj.category_markers; delete newObj.category_individuals;
+    newObj.biological_measurements = data.biological_measurements;
   } else if (rest == 'blo') {
-    newObj = data;
-    delete newObj.project_enrollments; delete newObj.projects; delete newObj.demographics; delete newObj.markers;
-    delete newObj.psychiatric_disorders; delete newObj.medical_history; delete newObj.biological_measurements; delete newObj.individuals;
-    delete newObj.categories; delete newObj.category_markers; delete newObj.category_individuals;
+    newObj.blood_samples = data.blood_samples;
   }
   return newObj;
 };
@@ -345,10 +334,12 @@ const checkChanges = function (obj) {
 
 const updateDB = function (obj, id) {
   str4 = ' RETURNING';
-  if (Object.entries(obj)[0][0] == 'project_enrollments') {
-    str3 = ` WHERE individual_id = ${id};`;
+  if (Object.entries(obj)[0][0] == 'blood_samples') {
+    str3 = ` WHERE blood_sample_id = '${id}'`;
   } else if (Object.entries(obj)[0][0] == 'categories' || Object.entries(obj)[0][0] == 'category_markers' || Object.entries(obj)[0][0] == 'category_individuals') {
     str3 = ` WHERE category_id = ${id}`;
+  } else if (Object.entries(obj)[0][0] == 'biological_measurements') {
+    str3 = ` WHERE biological_measurements_id = ${id}`;
   } else if (Object.entries(obj)[0][0] == 'projects') {
     str3 = ` WHERE project_id = ${id}`;
   } else if (Object.entries(obj)[0][0] == 'markers') {
@@ -432,41 +423,46 @@ const getInput = function () {
 };
 
 const insertToTable = function (obj) {
-  for (const [key, value] of Object.entries(obj)) {
-    str1 = `INSERT INTO ${key} (`;
-    str3 = ' VALUES (';
-    str2 = '';
-    str4 = '';
-    for (const [key1, value1] of Object.entries(value)) {
-      type = dataInObj[key][key1];
-      str2 = `${str2 + key1}, `;
-      if (type == 'text' || type == 'date' || type == 'character') {
-        str4 = `${str4}'${value1}'` + ', ';
-      } else {
-        str4 = `${str4 + value1}, `;
-      }
-    }
-    str2 = str2.slice(0, str2.length - 2);
-    str4 = str4.slice(0, str4.length - 2);
-    str2 += ')';
-    str4 += ')';
-    str = `${str1 + str2 + str3 + str4} RETURNING *;`;
-    req = { request: str };
-    $.ajax({
-      url: '/results',
-      method: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({ obj: req }),
-      success(res) {
-        console.log(res);
-        if (!isEmpty(res[0])) {
-          $('#listElem').show();
-          $('#sukces').show();
-          updateResults(key, res[0]);
-          $('#listElem').hide();
+  if (isEmpty(obj)) {
+    $('#alert').text('Invalid input. Ensure all fields marked with an asterisk have been correctly filled.');
+  } else {
+    for (const [key, value] of Object.entries(obj)) {
+      str1 = `INSERT INTO ${key} (`;
+      str3 = ' VALUES (';
+      str2 = '';
+      str4 = '';
+      for (const [key1, value1] of Object.entries(value)) {
+        type = dataInObj[key][key1];
+        str2 = `${str2 + key1}, `;
+        if (type == 'text' || type == 'date' || type == 'character') {
+          str4 = `${str4}'${value1}'` + ', ';
+        } else {
+          str4 = `${str4 + value1}, `;
         }
-      },
-    });
+      }
+      str2 = str2.slice(0, str2.length - 2);
+      str4 = str4.slice(0, str4.length - 2);
+      str2 += ')';
+      str4 += ')';
+      str = `${str1 + str2 + str3 + str4} RETURNING *;`;
+      req = { request: str };
+      $.ajax({
+        url: '/results',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ obj: req }),
+        success(res) {
+          if (!isEmpty(res[0])) {
+            $('#listElem').show();
+            $('#sukces').show();
+            updateResults(key, res[0]);
+            $('#listElem').hide();
+          } else {
+            $('#alert').text('Invalid input. Ensure all fields marked with an asterisk have been correctly filled.');
+          }
+        },
+      });
+    }
   }
 };
 
@@ -474,11 +470,11 @@ const insertToTable = function (obj) {
 // function for delete
 
 const deleteRecord = function (obj, col, id) {
-  console.log('to jest delete');
+  console.log(obj);
   for (const [key, value] of Object.entries(obj)) {
     if (key == 'project_enrollments') { column = 'individual_id'; } else { column = col; }
     str = `DELETE FROM ${key} WHERE ${column} = ${id} RETURNING *;`;
-    console.log(str);
+    // str = "DELETE FROM individuals WHERE subject_id = 208072018;"
     req = { request: str };
     $.ajax({
       url: '/results',
@@ -588,53 +584,58 @@ const restrictonForPost = function (data, rest) {
 };
 
 const insertToTableSub = function (obj) {
-  str1 = 'INSERT INTO individuals (';
-  str3 = ' VALUES (';
-  str2 = '';
-  str4 = '';
-  for (const [key1, value1] of Object.entries(obj.individuals)) {
-    type = dataInObj.individuals[key1];
-    str2 = `${str2 + key1}, `;
-    if (type == 'text' || type == 'date' || type == 'character') {
-      str4 = `${str4}'${value1}'` + ', ';
-    } else {
-      str4 = `${str4 + value1}, `;
-    }
-  }
-  str2 = str2.slice(0, str2.length - 2);
-  str4 = str4.slice(0, str4.length - 2);
-  str2 += ')';
-  str4 += ')';
-  str = `${str1 + str2 + str3 + str4} RETURNING *;`;
-  req = { request: str };
-  $.ajax({
-    url: '/results',
-    method: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify({ obj: req }),
-    success(res) {
-      if (!isEmpty(res[0])) {
-        newId = res[0].subject_id;
-        /* $("#listElem").show();
-          $("#sukces").show();
-          updateResults(key, res[0])
-          $("#listElem").hide(); */
+  if (isEmpty(obj)) {
+    $('#alert').text('Invalid input. Ensure all fields marked with an asterisk have been correctly filled.');
+  } else {
+    str1 = 'INSERT INTO individuals (';
+    str3 = ' VALUES (';
+    str2 = '';
+    str4 = '';
+    for (const [key1, value1] of Object.entries(obj.individuals)) {
+      type = dataInObj.individuals[key1];
+      str2 = `${str2 + key1}, `;
+      if (type == 'text' || type == 'date' || type == 'character') {
+        str4 = `${str4}'${value1}'` + ', ';
+      } else {
+        str4 = `${str4 + value1}, `;
       }
-      for (const [key, value] of Object.entries(obj)) {
-        if (key == 'individuals') {} else {
-          console.log('to poczatek loop');
-          str1 = `INSERT INTO  ${key} (subject_id, `;
+    }
+    str2 = str2.slice(0, str2.length - 2);
+    str4 = str4.slice(0, str4.length - 2);
+    str2 += ')';
+    str4 += ')';
+    str = `${str1 + str2 + str3 + str4} RETURNING *;`;
+    req = { request: str };
+    $.ajax({
+      url: '/results',
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({ obj: req }),
+      success(res) {
+        if (isEmpty(res[0])) {
+          $('#alert').text('Incorrect input. Check if all fields marked with an asterisk have been completed correctly.');
+        } else {
+          newId = res[0].subject_id;
+          $('#listElem').show();
+          $('#sukces').show();
+          updateResults('individuals', res[0]);
+          str1 = 'INSERT INTO psychiatric_disorders (subject_id, ';
           str3 = ` VALUES (${newId}, `;
           str2 = '';
           str4 = '';
-          for (const [key1, value1] of Object.entries(value)) {
-            type = dataInObj[key][key1];
-            str2 = `${str2 + key1}, `;
-            if (type == 'text' || type == 'date' || type == 'character') {
-              str4 = `${str4}'${value1}'` + ', ';
-            } else {
-              str4 = `${str4 + value1}, `;
+          if (!isEmpty(obj.psychiatric_disorders)) {
+            for (const [key1, value1] of Object.entries(obj.psychiatric_disorders)) {
+              type = dataInObj.psychiatric_disorders[key1];
+              str2 = `${str2 + key1}, `;
+              if (type == 'text' || type == 'date' || type == 'character') {
+                str4 = `${str4}'${value1}'` + ', ';
+              } else {
+                str4 = `${str4 + value1}, `;
+              }
             }
+          } else {
+            str1 = str1.slice(0, str1.length - 2);
+            str3 = str3.slice(0, str3.length - 2);
           }
           str2 = str2.slice(0, str2.length - 2);
           str4 = str4.slice(0, str4.length - 2);
@@ -649,17 +650,80 @@ const insertToTableSub = function (obj) {
             contentType: 'application/json',
             data: JSON.stringify({ obj: req }),
             success(res) {
-              console.log(res);
-              if (!isEmpty(res[0])) {
-                $('#listElem').show();
-                $('#sukces').show();
-                updateResults(key, res[0]);
-                $('#listElem').hide();
+              updateResults('psychiatric_disorders', res[0]);
+            },
+          });
+          str1 = 'INSERT INTO medical_history (subject_id, ';
+          str3 = ` VALUES (${newId}, `;
+          str2 = '';
+          str4 = '';
+          if (!isEmpty(obj.medical_history)) {
+            for (const [key1, value1] of Object.entries(obj.medical_history)) {
+              type = dataInObj.medical_history[key1];
+              str2 = `${str2 + key1}, `;
+              if (type == 'text' || type == 'date' || type == 'character') {
+                str4 = `${str4}'${value1}'` + ', ';
+              } else {
+                str4 = `${str4 + value1}, `;
               }
+            }
+          } else {
+            str1 = str1.slice(0, str1.length - 2);
+            str3 = str3.slice(0, str3.length - 2);
+          }
+          str2 = str2.slice(0, str2.length - 2);
+          str4 = str4.slice(0, str4.length - 2);
+          str2 += ')';
+          str4 += ')';
+          str = `${str1 + str2 + str3 + str4} RETURNING *;`;
+          req = { request: str };
+          console.log(req);
+          $.ajax({
+            url: '/results',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ obj: req }),
+            success(res) {
+              updateResults('medical_history', res[0]);
+            },
+          });
+          str1 = 'INSERT INTO demographics (subject_id, ';
+          str3 = ` VALUES (${newId}, `;
+          str2 = '';
+          str4 = '';
+          if (!isEmpty(obj.demographics)) {
+            for (const [key1, value1] of Object.entries(obj.demographics)) {
+              type = dataInObj.demographics[key1];
+              str2 = `${str2 + key1}, `;
+              if (type == 'text' || type == 'date' || type == 'character') {
+                str4 = `${str4}'${value1}'` + ', ';
+              } else {
+                str4 = `${str4 + value1}, `;
+              }
+            }
+          } else {
+            str1 = str1.slice(0, str1.length - 2);
+            str3 = str3.slice(0, str3.length - 2);
+          }
+          str2 = str2.slice(0, str2.length - 2);
+          str4 = str4.slice(0, str4.length - 2);
+          str2 += ')';
+          str4 += ')';
+          str = `${str1 + str2 + str3 + str4} RETURNING *;`;
+          req = { request: str };
+          console.log(req);
+          $.ajax({
+            url: '/results',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ obj: req }),
+            success(res) {
+              updateResults('demographics', res[0]);
+              $('#listElem').hide();
             },
           });
         }
-      }
-    },
-  });
+      },
+    });
+  }
 };

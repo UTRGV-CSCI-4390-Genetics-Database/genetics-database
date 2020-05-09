@@ -42,44 +42,69 @@
     Input the ID of the record you wish to change into one of the boxes below and press confirm. Then at the bottom of
     the page modify the record to your liking, and press the submit button when you're done.
   </p>
-  <div class="input-group col-5">
-    <div class="input-group-prepend">
-      <div class="mojkolor input-group-text" id="btnGroupAddon">Update by Subject ID</div>
+  <div class="row">
+    <div class="col-sm">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="mojkolor input-group-text" id="btnGroupAddon">Update by Subject Id</div>
+        </div>
+        <input id="valSub" type="number" class="form-control" placeholder="Input subject Id">
+        <button id="btnSub" type="button" class="btn btn-outline-success">Confirm</button>
+      </div>
+      <div class="h-divider"></div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="mojkolor input-group-text" id="btnGroupAddon">Update by Projects Id</div>
+        </div>
+        <input id="valPro" type="number" class="form-control" placeholder="Input projects Id">
+        <button id="btnPro" type="button" class="btn btn-outline-success">Confirm</button>
+      </div>
+      <div class="h-divider"></div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="mojkolor input-group-text" id="btnGroupAddon">Update by Categories Id</div>
+        </div>
+        <input id="valCat" type="number" class="form-control" placeholder="Input categories Id">
+        <button id="btnCat" type="button" class="btn btn-outline-success">Confirm</button>
+      </div>
     </div>
-    <input id="valSub" type="number" class="form-control" placeholder="subject id">
-    <button id="btnSub" type="button" class="btn btn-outline-success">Confirm</button>
+    <div class="col-sm">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="mojkolor input-group-text" id="btnGroupAddon">Update by Marker Name</div>
+        </div>
+        <input id="valMar" type="text" class="form-control" placeholder="Input Marker Name">
+        <button id="btnMar" type="button" class="btn btn-outline-success">Confirm</button>
+      </div>
+      <div class="h-divider"></div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="mojkolor input-group-text" id="btnGroupAddon">Update by Blood Sample Id</div>
+        </div>
+        <input id="valBlo" type="text" class="form-control" placeholder="Input Blood Sample Id">
+        <button id="btnBlo" type="button" class="btn btn-outline-success">Confirm</button>
+      </div>
+      <div class="h-divider"></div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="mojkolor input-group-text" id="btnGroupAddon">Update by Biological Measurement Id</div>
+        </div>
+        <input id="valBio" type="number" class="form-control" placeholder="Input Biological Measurement Id">
+        <button id="btnBio" type="button" class="btn btn-outline-success">Confirm</button>
+      </div>
+    </div>
   </div>
+
+
   <div class="h-divider"></div>
-  <div class="input-group col-5">
-    <div class="input-group-prepend">
-      <div class="mojkolor input-group-text" id="btnGroupAddon">Update by Project ID</div>
-    </div>
-    <input id="valPro" type="number" class="form-control" placeholder="project id">
-    <button id="btnPro" type="button" class="btn btn-outline-success">Confirm</button>
-  </div>
-  <div class="h-divider"></div>
-  <div class="input-group col-5">
-    <div class="input-group-prepend">
-      <div class="mojkolor input-group-text" id="btnGroupAddon">Update by Category ID</div>
-    </div>
-    <input id="valCat" type="number" class="form-control" placeholder="category id">
-    <button id="btnCat" type="button" class="btn btn-outline-success">Confirm</button>
-  </div>
-  <div class="h-divider"></div>
-  <div class="input-group col-5">
-    <div class="input-group-prepend">
-      <div class="mojkolor input-group-text" id="btnGroupAddon">Update by Marker Name</div>
-    </div>
-    <input id="valMar" type="text" class="form-control" placeholder="marker name">
-    <button id="btnMar" type="button" class="btn btn-outline-success">Confirm</button>
-  </div>
+
   <div class="h-divider1"></div>
   <div class="h-divider4"></div>
   <div class="btn-group">
     <button id="reset" class="btn btn-warning btn-lg" type="button">Reset</button>
     <button id="update" class="btn btn-success btn-lg" type="button">Update</button>
   </div>
-  <p id="alert" class="alarm"></p>
+
   <div id="accordion" class="col-5">
     <div id="card" class="card">
       <div class="card-header" id="headingOne">
@@ -98,6 +123,7 @@
   <div id="marDiv" class="input-group mar temp">
     <div class="input-group-prepend"><label class="input-group-text">Opt</label></div>
     <select id="marIn" class="custom-select">
+      <option></option>
       <option value="1">1. Married</option>
       <option value="2">2. Separated</option>
       <option value="3">3. Divorced</option>
@@ -260,6 +286,7 @@
   </div>
   <div class="h-divider1"></div>
   <div class="h-divider4"></div>
+  <p id="alert" class="alarm"></p>
   <h3 id="sukces" class="temp mojkolor">The database was successfully updated: </h3>
   <div id="listElem">
     <li class="list-group-item d-flex justify-content-between align-items-center">
